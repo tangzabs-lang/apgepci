@@ -20,7 +20,7 @@ export function RequestActions({
   const [supplierId, setSupplierId] = useState("");
 
   return (
-    <div className="mt-4 flex flex-wrap items-center gap-2">
+    <div className="mt-4 grid grid-cols-1 gap-2 sm:flex sm:flex-wrap sm:items-center">
       {status === "draft" && (
         <button
           disabled={pending}

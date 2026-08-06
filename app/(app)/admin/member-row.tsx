@@ -4,19 +4,63 @@ import { useTransition } from "react";
 import { updateMemberRole, deactivateMember, reactivateMember } from "@/lib/actions/admin";
 import { Badge } from "@/components/table";
 
-export function MemberRow({
-  membershipId,
-  fullName,
-  roleId,
-  roles,
-  status,
-}: {
+type MemberProps = {
   membershipId: string;
   fullName: string;
   roleId: string;
   roles: { id: string; name: string }[];
   status: string;
-}) {
+};
+
+/** Carte membre : version mobile de la ligne de tableau. */
+export function MemberCard({ membershipId, fullName, roleId, roles, status }: MemberProps) {
+  const [pending, startTransition] = useTransition();
+
+  return (
+    <li className="card p-4">
+      <div className="flex items-start justify-between gap-3">
+        <span className="min-w-0 text-base font-bold text-slate-900">{fullName}</span>
+        <Badge tone={status === "active" ? "green" : "red"}>{status}</Badge>
+      </div>
+
+      <label className="mt-3 block">
+        <span className="field-label">Rôle</span>
+        <select
+          defaultValue={roleId}
+          disabled={pending}
+          onChange={(e) => startTransition(() => updateMemberRole(membershipId, e.target.value))}
+          className="field-input mt-1"
+        >
+          {roles.map((r) => (
+            <option key={r.id} value={r.id}>
+              {r.name}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      {status === "active" ? (
+        <button
+          disabled={pending}
+          onClick={() => startTransition(() => deactivateMember(membershipId))}
+          className="btn btn-danger mt-3 w-full"
+        >
+          Suspendre
+        </button>
+      ) : (
+        <button
+          disabled={pending}
+          onClick={() => startTransition(() => reactivateMember(membershipId))}
+          className="btn btn-success mt-3 w-full"
+        >
+          Réactiver
+        </button>
+      )}
+    </li>
+  );
+}
+
+export function MemberRow({ membershipId, fullName, roleId, roles, status }: MemberProps) {
   const [pending, startTransition] = useTransition();
 
   return (

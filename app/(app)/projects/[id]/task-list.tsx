@@ -32,7 +32,7 @@ export function TaskList({ projectId, tasks }: { projectId: string; tasks: Task[
         {tasks.length === 0 && <p className="text-sm text-slate-500">Aucune tâche.</p>}
       </ul>
 
-      <form action={boundAdd} className="mt-4 flex gap-2">
+      <form action={boundAdd} className="mt-4 flex flex-col gap-2 sm:flex-row">
         <input
           name="title"
           placeholder="Nouvelle tâche"
@@ -44,10 +44,7 @@ export function TaskList({ projectId, tasks }: { projectId: string; tasks: Task[
           type="date"
           className="field-input"
         />
-        <button
-          type="submit"
-          className="btn btn-primary"
-        >
+        <button type="submit" className="btn btn-primary w-full sm:w-auto">
           Ajouter
         </button>
       </form>

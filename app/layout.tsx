@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -16,6 +16,13 @@ export const metadata: Metadata = {
   title: "APGEPCI — Structurez et pilotez votre entreprise",
   description:
     "APGEPCI centralise l'organisation, les ventes, les achats, le stock et les équipes de votre entreprise, puis compare vos objectifs à vos résultats, secteur par secteur.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#2563eb",
 };
 
 export default function RootLayout({

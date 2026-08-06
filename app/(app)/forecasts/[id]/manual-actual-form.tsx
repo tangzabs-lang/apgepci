@@ -8,14 +8,14 @@ export function ManualActualForm({ forecastId }: { forecastId: string }) {
   const [pending, startTransition] = useTransition();
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
       <input
         type="number"
         step="0.01"
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Valeur réalisée"
-        className="w-40 field-input"
+        className="field-input sm:w-40"
       />
       <button
         disabled={pending || !value}
@@ -25,7 +25,7 @@ export function ManualActualForm({ forecastId }: { forecastId: string }) {
             setValue("");
           })
         }
-        className="btn btn-primary"
+        className="btn btn-primary w-full sm:w-auto"
       >
         Enregistrer la réalisation
       </button>

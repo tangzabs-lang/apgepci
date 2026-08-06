@@ -140,7 +140,7 @@ export function PageHeader({
       </div>
       {/* Sur mobile les actions passent en pleine largeur, côte à côte dès sm. */}
       {action && (
-        <div className="flex flex-col gap-2 *:w-full [&_.btn]:w-full sm:flex-row sm:flex-wrap sm:items-center sm:*:w-auto sm:[&_.btn]:w-auto">
+        <div className="flex flex-col items-stretch gap-2 [&>div]:grid [&>div]:grid-cols-1 [&>div]:gap-2 [&_.btn]:w-full sm:flex-row sm:flex-wrap sm:items-center sm:[&>div]:flex sm:[&_.btn]:w-auto">
           {action}
         </div>
       )}

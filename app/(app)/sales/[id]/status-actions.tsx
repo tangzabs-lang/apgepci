@@ -23,7 +23,7 @@ export function StatusActions({ saleId, status }: { saleId: string; status: stri
   if (steps.length === 0) return null;
 
   return (
-    <div className="mt-4 flex flex-wrap items-center gap-2">
+    <div className="mt-4 grid grid-cols-1 gap-2 sm:flex sm:flex-wrap sm:items-center">
       {steps.map((step) => (
         <button
           key={step.to}

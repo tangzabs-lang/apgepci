@@ -136,7 +136,7 @@ export function CheckboxField({
 export function SubmitButton({ children }: { children: React.ReactNode }) {
   const { pending } = useFormStatus();
   return (
-    <button type="submit" disabled={pending} className="btn btn-primary">
+    <button type="submit" disabled={pending} className="btn btn-primary w-full sm:w-auto">
       {pending && <Loader2 className="h-4 w-4 animate-spin" />}
       {pending ? "Enregistrement..." : children}
     </button>

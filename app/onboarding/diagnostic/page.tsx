@@ -18,7 +18,7 @@ import { OnboardingShell } from "@/components/onboarding/onboarding-shell";
 import { Section } from "@/components/onboarding/section";
 
 const fieldClass =
-  "mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition-colors focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5";
+  "field-input mt-1.5";
 
 export default async function DiagnosticPage({
   searchParams,

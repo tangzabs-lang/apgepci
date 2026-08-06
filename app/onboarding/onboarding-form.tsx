@@ -17,8 +17,7 @@ import { Section } from "@/components/onboarding/section";
 type Sector = { id: string; key: string; name: string };
 type Step = 1 | 2;
 
-const fieldClass =
-  "mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition-colors focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5";
+const fieldClass = "field-input mt-1.5";
 
 const STEP_LABELS: Record<Step, string> = {
   1: "Votre entreprise",
@@ -106,7 +105,7 @@ export function OnboardingForm({
               <option value="grande">Grande entreprise (100+)</option>
             </SelectField>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Field label="Devise" name="currency" defaultValue="XOF" />
               <Field label="Langue" name="language" defaultValue="fr" />
             </div>

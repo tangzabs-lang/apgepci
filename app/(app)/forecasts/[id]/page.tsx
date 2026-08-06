@@ -29,7 +29,7 @@ export default async function ForecastDetailPage({ params }: { params: Promise<{
     <div>
       <PageHeader title={`Prévision : ${forecast.subject}`} />
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Stat label="Prévu" value={Number(forecast.target_value).toLocaleString("fr-FR")} />
         <Stat label="Réalisé" value={actual.toLocaleString("fr-FR")} />
         <div>

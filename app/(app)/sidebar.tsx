@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   Boxes,
   Building2,
@@ -26,6 +27,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { MODULE_NAV } from "@/lib/modules";
+import { Logo } from "@/components/logo";
 
 const ICONS: Record<string, LucideIcon> = {
   dashboards: LayoutDashboard,
@@ -147,40 +149,19 @@ function NavList({
 
 function Brand() {
   return (
-    <Link href="/dashboard" className="flex items-center gap-3 px-3">
-      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-blue-600 to-blue-400 text-sm font-black text-white shadow-[0_8px_20px_-8px_rgba(37,99,235,0.7)]">
-        A
-      </span>
-      <span className="min-w-0">
-        <span className="block text-base font-bold tracking-tight text-slate-900">APGEPCI</span>
-        <span className="block truncate text-[0.7rem] font-medium text-slate-400">
-          Pilotage d&apos;entreprise
-        </span>
-      </span>
+    <Link href="/dashboard" aria-label="APGEPCI — tableau de bord" className="block px-3">
+      <Logo height={40} priority />
     </Link>
   );
 }
 
 export function Sidebar({ permissions }: { permissions: string[] }) {
   return (
-    <aside className="sticky top-0 hidden h-screen w-72 shrink-0 flex-col border-r border-slate-200 bg-white/90 py-5 backdrop-blur lg:flex">
+    <aside className="fixed inset-y-0 left-0 z-30 hidden w-72 flex-col border-r border-slate-200 bg-white py-5 lg:flex">
       <div className="pb-6">
         <Brand />
       </div>
       <NavList permissions={permissions} />
-      <div className="mx-3 mt-auto rounded-2xl bg-linear-to-br from-blue-600 to-blue-500 p-4 text-white shadow-[0_12px_28px_-14px_rgba(37,99,235,0.9)]">
-        <Sparkles className="h-5 w-5" />
-        <p className="mt-2 text-sm font-semibold leading-snug">Modèles de gestion</p>
-        <p className="mt-1 text-xs leading-relaxed text-blue-50/90">
-          Comparez trois niveaux de suivi et adaptez vos tables en quelques clics.
-        </p>
-        <Link
-          href="/org"
-          className="mt-3 inline-flex items-center gap-1 rounded-lg bg-white/15 px-2.5 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-white/25"
-        >
-          Explorer
-        </Link>
-      </div>
     </aside>
   );
 }
@@ -199,7 +180,17 @@ function Drawer({
     };
   }, []);
 
-  return (
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [onClose]);
+
+  // Rendu hors du header : son backdrop-filter crée un bloc conteneur qui
+  // piégerait le tiroir « fixed » à l'intérieur de la barre supérieure.
+  return createPortal(
     <div className="fixed inset-0 z-[60] lg:hidden">
       <button
         type="button"
@@ -221,7 +212,8 @@ function Drawer({
         </div>
         <NavList permissions={permissions} onNavigate={onClose} />
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 

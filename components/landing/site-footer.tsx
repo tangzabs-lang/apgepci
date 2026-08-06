@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LogoLink } from "@/components/logo";
 
 const COLUMNS = [
   {
@@ -25,14 +26,7 @@ export function SiteFooter() {
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-4">
           <div className="sm:col-span-2 md:col-span-2">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-blue-600 to-blue-400 text-sm font-black text-white shadow-[0_8px_20px_-8px_rgba(37,99,235,0.7)]">
-                A
-              </span>
-              <span className="text-base font-semibold tracking-tight text-slate-900">
-                APGEPCI
-              </span>
-            </Link>
+            <LogoLink href="/" height={36} />
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-slate-500">
               La plateforme qui centralise, structure et pilote les données de votre
               entreprise&nbsp;: organisation, ventes, achats, stock, RH et rapports, réunis en

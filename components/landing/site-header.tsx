@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { Logo } from "@/components/logo";
 
 const NAV_LINKS = [
   { href: "#fonctionnalites", label: "Fonctionnalités" },
@@ -24,13 +25,8 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 /80">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-blue-600 to-blue-400 text-sm font-black text-white shadow-[0_8px_20px_-8px_rgba(37,99,235,0.7)]">
-            A
-          </span>
-          <span className="text-base font-semibold tracking-tight text-slate-900">
-            APGEPCI
-          </span>
+        <Link href="/" aria-label="APGEPCI — accueil" onClick={() => setOpen(false)}>
+          <Logo height={36} priority />
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">

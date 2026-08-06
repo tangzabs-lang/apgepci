@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LogoLink } from "@/components/logo";
 import { Check } from "lucide-react";
 
 const STEPS = [
@@ -17,14 +18,7 @@ export function OnboardingShell({
     <div className="app-shell-bg flex flex-1 flex-col">
       <div className="border-b border-blue-100 bg-white/85 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-4 sm:px-6">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-linear-to-br from-blue-600 to-blue-400 text-xs font-black text-white">
-              A
-            </span>
-            <span className="hidden text-sm font-semibold tracking-tight text-slate-900 sm:inline">
-              APGEPCI
-            </span>
-          </Link>
+          <LogoLink href="/" height={32} priority />
 
           <ol className="flex items-center gap-2 sm:gap-3">
             {STEPS.map((s, i) => {

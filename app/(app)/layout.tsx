@@ -20,7 +20,8 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   return (
     <div className="app-shell-bg flex min-h-screen flex-1">
       <Sidebar permissions={perms} />
-      <div className="flex min-w-0 flex-1 flex-col">
+      {/* lg:pl-72 : compense la barre latérale fixe, sortie du flux. */}
+      <div className="flex min-w-0 flex-1 flex-col lg:pl-72">
         <Topbar
           companies={companies}
           activeCompanyId={active.company_id}

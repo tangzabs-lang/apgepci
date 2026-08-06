@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LogoLink } from "@/components/logo";
 
 export function AuthShell({
   eyebrow,

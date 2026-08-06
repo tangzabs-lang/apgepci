@@ -1,4 +1,4 @@
-import Link from "next/link";
+
 import { LogoLink } from "@/components/logo";
 import { Check } from "lucide-react";
 

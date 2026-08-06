@@ -14,6 +14,8 @@ import {
   Headset,
   LayoutDashboard,
   Menu,
+  PanelLeftClose,
+  PanelLeftOpen,
   Receipt,
   Settings2,
   ShieldCheck,
@@ -77,10 +79,12 @@ function useVisibleItems(permissions: string[]) {
 function NavLink({
   item,
   isActive,
+  collapsed,
   onNavigate,
 }: {
   item: { key: string; href: string; label: string };
   isActive: boolean;
+  collapsed?: boolean;
   onNavigate?: () => void;
 }) {
   const Icon = ICONS[item.key] ?? Sparkles;
@@ -89,7 +93,10 @@ function NavLink({
       href={item.href}
       onClick={onNavigate}
       aria-current={isActive ? "page" : undefined}
-      className={`group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
+      title={collapsed ? item.label : undefined}
+      className={`group relative flex items-center gap-3 rounded-xl py-2.5 text-sm font-medium transition-all ${
+        collapsed ? "justify-center px-0" : "px-3"
+      } ${
         isActive
           ? "bg-linear-to-r from-blue-600 to-blue-500 text-white shadow-[0_8px_20px_-8px_rgba(37,99,235,0.55)]"
           : "text-slate-600 hover:bg-blue-50 hover:text-blue-700"
@@ -104,16 +111,18 @@ function NavLink({
       >
         <Icon className="h-4 w-4" />
       </span>
-      <span className="min-w-0 truncate">{item.label}</span>
+      {!collapsed && <span className="min-w-0 truncate">{item.label}</span>}
     </Link>
   );
 }
 
 function NavList({
   permissions,
+  collapsed,
   onNavigate,
 }: {
   permissions: string[];
+  collapsed?: boolean;
   onNavigate?: () => void;
 }) {
   const pathname = usePathname();
@@ -121,47 +130,90 @@ function NavList({
   const byKey = new Map(items.map((i) => [i.key, i]));
 
   return (
-    <nav className="flex flex-1 flex-col gap-6 overflow-y-auto px-3 pb-4">
-      {GROUPS.map((group) => {
-        const groupItems = group.keys.map((k) => byKey.get(k)).filter(Boolean) as typeof items;
-        if (groupItems.length === 0) return null;
-        return (
+    <nav
+      className={`flex flex-1 flex-col overflow-y-auto pb-4 ${
+        collapsed ? "gap-3 px-2" : "gap-6 px-3"
+      }`}
+    >
+      {GROUPS.map((group) => ({
+        group,
+        groupItems: group.keys.map((k) => byKey.get(k)).filter(Boolean) as typeof items,
+      }))
+        .filter(({ groupItems }) => groupItems.length > 0)
+        .map(({ group, groupItems }, index) => (
           <div key={group.title}>
-            <p className="px-3 pb-2 text-[0.68rem] font-bold uppercase tracking-[0.14em] text-slate-400">
-              {group.title}
-            </p>
+            {/* Replié : un filet remplace l'intitulé, illisible sur 4,5 rem. */}
+            {collapsed ? (
+              index > 0 && (
+                <div aria-hidden className="mx-2 mb-3 border-t border-slate-200" />
+              )
+            ) : (
+              <p className="px-3 pb-2 text-[0.68rem] font-bold uppercase tracking-[0.14em] text-slate-400">
+                {group.title}
+              </p>
+            )}
             <div className="flex flex-col gap-1">
               {groupItems.map((item) => (
                 <NavLink
                   key={item.key}
                   item={item}
                   isActive={pathname === item.href || pathname.startsWith(item.href + "/")}
+                  collapsed={collapsed}
                   onNavigate={onNavigate}
                 />
               ))}
             </div>
           </div>
-        );
-      })}
+        ))}
     </nav>
   );
 }
 
-function Brand() {
+function Brand({ collapsed }: { collapsed?: boolean }) {
   return (
-    <Link href="/dashboard" aria-label="APGEPCI — tableau de bord" className="block px-3">
-      <Logo height={40} priority />
+    <Link href="/dashboard" aria-label="APGEPCI — tableau de bord" className="inline-flex min-w-0">
+      <Logo variant={collapsed ? "mark" : "lockup"} height={36} priority />
     </Link>
   );
 }
 
-export function Sidebar({ permissions }: { permissions: string[] }) {
+export function Sidebar({
+  permissions,
+  collapsed,
+  onToggle,
+}: {
+  permissions: string[];
+  collapsed: boolean;
+  onToggle: () => void;
+}) {
   return (
-    <aside className="fixed inset-y-0 left-0 z-30 hidden w-72 flex-col border-r border-slate-200 bg-white py-5 lg:flex">
-      <div className="pb-6">
-        <Brand />
+    <aside
+      className={`fixed inset-y-0 left-0 z-30 hidden flex-col border-r border-slate-200 bg-white py-5 transition-[width] duration-200 lg:flex ${
+        collapsed ? "w-18" : "w-60"
+      }`}
+    >
+      <div
+        className={`flex items-center gap-2 px-3 pb-6 ${
+          collapsed ? "flex-col" : "justify-between"
+        }`}
+      >
+        <Brand collapsed={collapsed} />
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-expanded={!collapsed}
+          aria-label={collapsed ? "Déplier le menu" : "Replier le menu"}
+          title={collapsed ? "Déplier le menu" : "Replier le menu"}
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-blue-600"
+        >
+          {collapsed ? (
+            <PanelLeftOpen className="h-5 w-5" />
+          ) : (
+            <PanelLeftClose className="h-5 w-5" />
+          )}
+        </button>
       </div>
-      <NavList permissions={permissions} />
+      <NavList permissions={permissions} collapsed={collapsed} />
     </aside>
   );
 }

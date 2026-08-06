@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { LogoLink } from "@/components/logo";
 
 export function AuthShell({
@@ -16,14 +15,7 @@ export function AuthShell({
 }) {
   return (
     <div className="flex flex-1 flex-col bg-white px-4 py-8 sm:px-6 sm:py-10">
-      <Link href="/" className="inline-flex items-center gap-2 self-start">
-        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-linear-to-br from-blue-600 to-blue-400 text-xs font-black text-white">
-          A
-        </span>
-        <span className="text-sm font-semibold tracking-tight text-slate-900">
-          APGEPCI
-        </span>
-      </Link>
+      <LogoLink href="/" height={36} priority className="self-start" />
 
       <div className="flex flex-1 items-center justify-center">
         <div className="w-full max-w-sm py-8">

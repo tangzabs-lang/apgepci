@@ -3,6 +3,7 @@
 import { Building2, ChevronDown, LogOut } from "lucide-react";
 import { logout } from "@/lib/actions/auth";
 import { setActiveCompany } from "@/lib/actions/session";
+import { LogoLink } from "@/components/logo";
 import { MobileNav } from "./sidebar";
 
 type CompanyMembership = {
@@ -28,6 +29,8 @@ export function Topbar({
       <div className="flex h-14 items-center justify-between gap-2 px-3 sm:h-16 sm:gap-3 sm:px-6">
         <div className="flex min-w-0 items-center gap-3">
           <MobileNav permissions={permissions} />
+          {/* Rappel de marque là où la barre latérale n'est pas visible. */}
+          <LogoLink href="/dashboard" variant="mark" height={36} className="lg:hidden" />
 
           <form action={setActiveCompany} className="min-w-0">
             <label className="relative flex min-w-0 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-colors focus-within:border-blue-500 focus-within:shadow-[0_0_0_4px_rgba(37,99,235,0.12)] hover:border-blue-200">

@@ -2,7 +2,8 @@ import { redirect } from "next/navigation";
 import { getCurrentUser, getUserCompanies } from "@/lib/data/companies";
 import { getActiveCompany } from "@/lib/active-company";
 import { getMyPermissions } from "@/lib/data/permissions";
-import { MobileTabBar, Sidebar } from "./sidebar";
+import { AppShell } from "./app-shell";
+import { MobileTabBar } from "./sidebar";
 import { Topbar } from "./topbar";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
@@ -19,9 +20,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="app-shell-bg flex min-h-screen flex-1">
-      <Sidebar permissions={perms} />
-      {/* lg:pl-72 : compense la barre latérale fixe, sortie du flux. */}
-      <div className="flex min-w-0 flex-1 flex-col lg:pl-72">
+      <AppShell permissions={perms}>
         <Topbar
           companies={companies}
           activeCompanyId={active.company_id}
@@ -32,7 +31,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         <main className="mx-auto w-full max-w-[1600px] flex-1 px-4 pb-24 pt-5 sm:px-6 sm:pb-10 sm:pt-8 lg:pb-12">
           <div className="animate-rise">{children}</div>
         </main>
-      </div>
+      </AppShell>
       <MobileTabBar permissions={perms} />
     </div>
   );

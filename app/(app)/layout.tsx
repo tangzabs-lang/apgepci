@@ -15,18 +15,21 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const active = await getActiveCompany();
   if (!active) redirect("/onboarding");
 
-  const perms = await getMyPermissions(active.company_id);
+  const perms = Array.from(await getMyPermissions(active.company_id));
 
   return (
-    <div className="flex min-h-screen flex-1 bg-zinc-50 dark:bg-zinc-950">
-      <Sidebar permissions={Array.from(perms)} />
-      <div className="flex flex-1 flex-col">
+    <div className="app-shell-bg flex min-h-screen flex-1">
+      <Sidebar permissions={perms} />
+      <div className="flex min-w-0 flex-1 flex-col">
         <Topbar
           companies={companies}
           activeCompanyId={active.company_id}
           userEmail={user.email ?? ""}
+          permissions={perms}
         />
-        <main className="flex-1 overflow-y-auto p-6">{children}</main>
+        <main className="mx-auto w-full max-w-[1600px] flex-1 px-4 py-6 sm:px-6 sm:py-8">
+          <div className="animate-rise">{children}</div>
+        </main>
       </div>
     </div>
   );

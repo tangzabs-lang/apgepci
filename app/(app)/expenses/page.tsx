@@ -33,49 +33,49 @@ export default async function ExpensesPage() {
         action={
           <Link
             href="/expenses/new"
-            className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900"
+            className="btn btn-primary"
           >
             + Nouvelle dépense
           </Link>
         }
       />
 
-      <div className="overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
-        <table className="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800">
-          <thead className="bg-zinc-50 dark:bg-zinc-900">
-            <tr className="text-left text-xs font-semibold uppercase text-zinc-500 dark:text-zinc-400">
-              <th className="px-4 py-2">Référence</th>
-              <th className="px-4 py-2">Date</th>
-              <th className="px-4 py-2">Catégorie</th>
-              <th className="px-4 py-2">Bénéficiaire</th>
-              <th className="px-4 py-2">Montant</th>
-              <th className="px-4 py-2">Statut</th>
-              <th className="px-4 py-2" />
+      <div className="card overflow-x-auto">
+        <table className="min-w-full divide-y divide-slate-100">
+          <thead className="bg-linear-to-r from-blue-50 to-white">
+            <tr className="border-b border-slate-200 text-left text-[0.7rem] font-bold uppercase tracking-widest text-blue-900/70">
+              <th className="whitespace-nowrap px-4 py-3">Référence</th>
+              <th className="whitespace-nowrap px-4 py-3">Date</th>
+              <th className="whitespace-nowrap px-4 py-3">Catégorie</th>
+              <th className="whitespace-nowrap px-4 py-3">Bénéficiaire</th>
+              <th className="whitespace-nowrap px-4 py-3">Montant</th>
+              <th className="whitespace-nowrap px-4 py-3">Statut</th>
+              <th className="whitespace-nowrap px-4 py-3" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-200 bg-white dark:divide-zinc-800 dark:bg-zinc-900">
+          <tbody className="divide-y divide-slate-100 bg-white">
             {(expenses ?? []).map((e) => (
-              <tr key={e.id}>
-                <td className="px-4 py-2 text-sm">
-                  <Link href={`/expenses/${e.id}`} className="underline">
+              <tr className="transition-colors hover:bg-blue-50/50" key={e.id}>
+                <td className="px-4 py-3 text-sm text-slate-700">
+                  <Link href={`/expenses/${e.id}`} className="font-semibold text-blue-600 hover:underline">
                     {e.reference}
                   </Link>
                 </td>
-                <td className="px-4 py-2 text-sm">{e.expense_date}</td>
-                <td className="px-4 py-2 text-sm">{e.category?.name ?? "—"}</td>
-                <td className="px-4 py-2 text-sm">{e.beneficiary ?? "—"}</td>
-                <td className="px-4 py-2 text-sm">{Number(e.amount).toLocaleString("fr-FR")}</td>
-                <td className="px-4 py-2 text-sm">
+                <td className="px-4 py-3 text-sm text-slate-700">{e.expense_date}</td>
+                <td className="px-4 py-3 text-sm text-slate-700">{e.category?.name ?? "—"}</td>
+                <td className="px-4 py-3 text-sm text-slate-700">{e.beneficiary ?? "—"}</td>
+                <td className="px-4 py-3 text-sm text-slate-700">{Number(e.amount).toLocaleString("fr-FR")}</td>
+                <td className="px-4 py-3 text-sm text-slate-700">
                   <Badge tone={STATUS_TONE[e.status] ?? "default"}>{e.status}</Badge>
                 </td>
-                <td className="px-4 py-2 text-right">
+                <td className="px-4 py-3 text-right">
                   <DecisionButtons expenseId={e.id} status={e.status} />
                 </td>
               </tr>
             ))}
             {(expenses ?? []).length === 0 && (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-sm text-zinc-500 dark:text-zinc-400">
+                <td colSpan={7} className="px-4 py-12 text-center text-sm text-slate-500">
                   Aucune dépense enregistrée.
                 </td>
               </tr>

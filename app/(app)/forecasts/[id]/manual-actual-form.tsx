@@ -15,7 +15,7 @@ export function ManualActualForm({ forecastId }: { forecastId: string }) {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Valeur réalisée"
-        className="w-40 rounded-md border border-zinc-300 px-2 py-1.5 text-sm dark:border-zinc-700 dark:bg-zinc-950"
+        className="w-40 field-input"
       />
       <button
         disabled={pending || !value}
@@ -25,7 +25,7 @@ export function ManualActualForm({ forecastId }: { forecastId: string }) {
             setValue("");
           })
         }
-        className="rounded-md bg-zinc-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-60 dark:bg-zinc-50 dark:text-zinc-900"
+        className="btn btn-primary"
       >
         Enregistrer la réalisation
       </button>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getActiveCompany } from "@/lib/active-company";
-import { DataTable, PageHeader, Badge } from "@/components/table";
+import { DataTable, PageHeader, Badge, SectionTitle, StatTile } from "@/components/table";
 
 export default async function HrPage() {
   const active = await getActiveCompany();
@@ -26,13 +26,13 @@ export default async function HrPage() {
           <div className="flex gap-2">
             <Link
               href="/hr/positions/new"
-              className="rounded-md border border-zinc-300 px-3 py-2 text-sm font-medium hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
+              className="btn btn-outline"
             >
               + Poste
             </Link>
             <Link
               href="/hr/employees/new"
-              className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900"
+              className="btn btn-primary"
             >
               + Employé
             </Link>
@@ -50,7 +50,7 @@ export default async function HrPage() {
         />
       </div>
 
-      <h2 className="mb-2 text-sm font-semibold text-zinc-500 dark:text-zinc-400">Employés</h2>
+      <SectionTitle>Employés</SectionTitle>
       <DataTable
         rows={employees ?? []}
         editHref={(row) => `/hr/employees/${row.id}`}
@@ -67,7 +67,7 @@ export default async function HrPage() {
         ]}
       />
 
-      <h2 className="mb-2 mt-8 text-sm font-semibold text-zinc-500 dark:text-zinc-400">Postes</h2>
+      <SectionTitle className="mt-10">Postes</SectionTitle>
       <DataTable
         rows={positions ?? []}
         columns={[
@@ -81,10 +81,5 @@ export default async function HrPage() {
 }
 
 function StatCard({ label, value }: { label: string; value: number }) {
-  return (
-    <div className="rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
-      <p className="text-xs font-medium uppercase text-zinc-500 dark:text-zinc-400">{label}</p>
-      <p className="mt-2 text-2xl font-semibold text-zinc-900 dark:text-zinc-50">{value}</p>
-    </div>
-  );
+  return <StatTile label={label} value={value} />;
 }

@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { getActiveCompany } from "@/lib/active-company";
-import { PageHeader } from "@/components/table";
+import { PageHeader, SectionTitle } from "@/components/table";
 import { InviteForm } from "./invite-form";
 import { MemberRow } from "./member-row";
 
@@ -21,21 +21,21 @@ export default async function AdminPage() {
     <div>
       <PageHeader title="Administration" description="Utilisateurs, rôles et permissions de l'entreprise." />
 
-      <h2 className="mb-2 text-sm font-semibold text-zinc-500 dark:text-zinc-400">Ajouter un utilisateur</h2>
+      <SectionTitle>Ajouter un utilisateur</SectionTitle>
       <InviteForm companyId={active.company_id} roles={(roles ?? []).map((r) => ({ key: r.key, name: r.name }))} />
 
-      <h2 className="mb-2 mt-8 text-sm font-semibold text-zinc-500 dark:text-zinc-400">Membres de l&apos;entreprise</h2>
-      <div className="overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
-        <table className="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800">
-          <thead className="bg-zinc-50 dark:bg-zinc-900">
-            <tr className="text-left text-xs font-semibold uppercase text-zinc-500 dark:text-zinc-400">
-              <th className="px-4 py-2">Utilisateur</th>
-              <th className="px-4 py-2">Rôle</th>
-              <th className="px-4 py-2">Statut</th>
-              <th className="px-4 py-2" />
+      <SectionTitle className="mt-10">Membres de l&apos;entreprise</SectionTitle>
+      <div className="card overflow-x-auto">
+        <table className="min-w-full divide-y divide-slate-100">
+          <thead className="bg-linear-to-r from-blue-50 to-white">
+            <tr className="border-b border-slate-200 text-left text-[0.7rem] font-bold uppercase tracking-widest text-blue-900/70">
+              <th className="whitespace-nowrap px-4 py-3">Utilisateur</th>
+              <th className="whitespace-nowrap px-4 py-3">Rôle</th>
+              <th className="whitespace-nowrap px-4 py-3">Statut</th>
+              <th className="whitespace-nowrap px-4 py-3" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-200 bg-white dark:divide-zinc-800 dark:bg-zinc-900">
+          <tbody className="divide-y divide-slate-100 bg-white">
             {(members ?? []).map((m) => (
               <MemberRow
                 key={m.id}

@@ -34,16 +34,16 @@ export function EmployeeForm({
   const [state, action] = useActionState<ActionState, FormData>(upsertEmployee, undefined);
 
   return (
-    <form action={action} className="flex max-w-xl flex-col gap-4">
+    <form action={action} className="card flex max-w-2xl flex-col gap-4 p-5 sm:p-6">
       <input type="hidden" name="company_id" value={companyId} />
       {defaultValues?.id && <input type="hidden" name="id" value={defaultValues.id} />}
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <TextField label="Prénom" name="first_name" required defaultValue={defaultValues?.first_name} />
         <TextField label="Nom" name="last_name" required defaultValue={defaultValues?.last_name} />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <TextField label="Matricule" name="matricule" defaultValue={defaultValues?.matricule ?? undefined} />
         <TextField
           label="Date d'embauche"
@@ -53,7 +53,7 @@ export function EmployeeForm({
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <TextField label="Téléphone" name="phone" defaultValue={defaultValues?.phone ?? undefined} />
         <TextField label="E-mail" name="email" type="email" defaultValue={defaultValues?.email ?? undefined} />
       </div>

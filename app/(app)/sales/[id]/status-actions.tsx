@@ -36,12 +36,12 @@ export function StatusActions({ saleId, status }: { saleId: string; status: stri
               if (result?.error) setError(result.error);
             });
           }}
-          className="rounded-md border border-zinc-300 px-3 py-1.5 text-sm font-medium hover:bg-zinc-100 disabled:opacity-60 dark:border-zinc-700 dark:hover:bg-zinc-800"
+          className="btn btn-outline"
         >
           {step.label}
         </button>
       ))}
-      {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
+      {error && <p className="text-sm text-red-600">{error}</p>}
     </div>
   );
 }

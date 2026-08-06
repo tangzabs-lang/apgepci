@@ -15,7 +15,7 @@ export function InviteForm({
   const [state, action] = useActionState<ActionState, FormData>(inviteUser, undefined);
 
   return (
-    <form action={action} className="flex max-w-lg flex-col gap-4">
+    <form action={action} className="card flex max-w-xl flex-col gap-4 p-5 sm:p-6">
       <input type="hidden" name="company_id" value={companyId} />
       <TextField label="E-mail de l'utilisateur (déjà inscrit sur APGEPCI)" name="email" type="email" required />
       <SelectField

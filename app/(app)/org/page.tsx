@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getActiveCompany } from "@/lib/active-company";
-import { DataTable, PageHeader } from "@/components/table";
+import { DataTable, PageHeader, SectionTitle } from "@/components/table";
 
 export default async function OrgPage() {
   const active = await getActiveCompany();
@@ -30,13 +30,13 @@ export default async function OrgPage() {
           <div className="flex gap-2">
             <Link
               href="/org/sites/new"
-              className="rounded-md border border-zinc-300 px-3 py-2 text-sm font-medium hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
+              className="btn btn-outline"
             >
               + Site
             </Link>
             <Link
               href="/org/units/new"
-              className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900"
+              className="btn btn-primary"
             >
               + Unité organisationnelle
             </Link>
@@ -44,7 +44,7 @@ export default async function OrgPage() {
         }
       />
 
-      <h2 className="mb-2 text-sm font-semibold text-zinc-500 dark:text-zinc-400">Sites</h2>
+      <SectionTitle>Sites</SectionTitle>
       <DataTable
         rows={sites ?? []}
         editHref={(row) => `/org/sites/${row.id}`}
@@ -60,9 +60,9 @@ export default async function OrgPage() {
         ]}
       />
 
-      <h2 className="mb-2 mt-8 text-sm font-semibold text-zinc-500 dark:text-zinc-400">
+      <SectionTitle className="mt-10">
         Unités organisationnelles
-      </h2>
+      </SectionTitle>
       <DataTable
         rows={orgUnits ?? []}
         editHref={(row) => `/org/units/${row.id}`}

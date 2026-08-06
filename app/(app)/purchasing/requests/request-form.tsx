@@ -20,7 +20,7 @@ export function RequestForm({
   const [lines, setLines] = useState<Line[]>([{ product_id: "", quantity: 1, need_description: "" }]);
 
   return (
-    <form action={action} className="flex max-w-2xl flex-col gap-4">
+    <form action={action} className="card flex max-w-2xl flex-col gap-4 p-5 sm:p-6">
       <input type="hidden" name="company_id" value={companyId} />
       <input
         type="hidden"
@@ -28,7 +28,7 @@ export function RequestForm({
         value={JSON.stringify(lines.filter((l) => l.product_id))}
       />
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <SelectField
           label="Service demandeur"
           name="org_unit_id"
@@ -50,7 +50,7 @@ export function RequestForm({
       </div>
 
       <div>
-        <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Articles</label>
+        <label className="field-label">Articles</label>
         <div className="mt-2 flex flex-col gap-2">
           {lines.map((line, i) => (
             <div key={i} className="flex gap-2">
@@ -59,7 +59,7 @@ export function RequestForm({
                 onChange={(e) =>
                   setLines((prev) => prev.map((l, idx) => (idx === i ? { ...l, product_id: e.target.value } : l)))
                 }
-                className="flex-1 rounded-md border border-zinc-300 px-2 py-1 text-sm dark:border-zinc-700 dark:bg-zinc-950"
+                className="field-input flex-1"
               >
                 <option value="">Article...</option>
                 {products.map((p) => (
@@ -77,12 +77,12 @@ export function RequestForm({
                     prev.map((l, idx) => (idx === i ? { ...l, quantity: Number(e.target.value) } : l))
                   )
                 }
-                className="w-24 rounded-md border border-zinc-300 px-2 py-1 text-sm dark:border-zinc-700 dark:bg-zinc-950"
+                className="w-24 field-input"
               />
               <button
                 type="button"
                 onClick={() => setLines((prev) => prev.filter((_, idx) => idx !== i))}
-                className="text-sm text-red-600 hover:underline dark:text-red-400"
+                className="text-sm text-red-600 hover:underline"
               >
                 Retirer
               </button>
@@ -92,7 +92,7 @@ export function RequestForm({
         <button
           type="button"
           onClick={() => setLines((prev) => [...prev, { product_id: "", quantity: 1, need_description: "" }])}
-          className="mt-2 text-sm font-medium text-zinc-900 underline dark:text-zinc-50"
+          className="mt-2 text-sm font-semibold text-blue-600 hover:text-blue-700 hover:underline"
         >
           + Ajouter un article
         </button>

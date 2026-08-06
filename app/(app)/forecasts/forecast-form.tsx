@@ -9,7 +9,7 @@ export function ForecastForm({ companyId }: { companyId: string }) {
   const [state, action] = useActionState<ActionState, FormData>(createForecast, undefined);
 
   return (
-    <form action={action} className="flex max-w-xl flex-col gap-4">
+    <form action={action} className="card flex max-w-2xl flex-col gap-4 p-5 sm:p-6">
       <input type="hidden" name="company_id" value={companyId} />
 
       <SelectField
@@ -46,7 +46,7 @@ export function ForecastForm({ companyId }: { companyId: string }) {
         ]}
       />
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <TextField label="Début de période" name="period_start" type="date" required />
         <TextField label="Fin de période" name="period_end" type="date" required />
       </div>

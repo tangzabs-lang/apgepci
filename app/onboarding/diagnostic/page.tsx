@@ -18,7 +18,7 @@ import { OnboardingShell } from "@/components/onboarding/onboarding-shell";
 import { Section } from "@/components/onboarding/section";
 
 const fieldClass =
-  "mt-1.5 w-full rounded-lg border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none transition-colors focus:border-zinc-900 focus:ring-4 focus:ring-zinc-900/5 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-50 dark:focus:border-zinc-100 dark:focus:ring-zinc-100/5";
+  "mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition-colors focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5";
 
 export default async function DiagnosticPage({
   searchParams,
@@ -46,13 +46,13 @@ export default async function DiagnosticPage({
   return (
     <OnboardingShell step={2}>
       <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14">
-        <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-zinc-900 text-white dark:bg-white dark:text-zinc-900">
+        <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-linear-to-br from-blue-600 to-blue-400 text-white shadow-[0_12px_24px_-12px_rgba(37,99,235,0.9)]">
           <ClipboardList className="h-5 w-5" />
         </span>
-        <h1 className="mt-4 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-50">
+        <h1 className="mt-4 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
           Questionnaire de diagnostic initial
         </h1>
-        <p className="mt-2 max-w-xl text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
+        <p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-500">
           Ces réponses permettent de recommander automatiquement les modules adaptés à votre
           activité. Vous pourrez les modifier à tout moment.
         </p>
@@ -137,12 +137,12 @@ export default async function DiagnosticPage({
           </Section>
 
           <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-xs text-zinc-400 dark:text-zinc-500">
+            <p className="text-xs text-slate-400">
               Vous pourrez revenir modifier ces réponses à tout moment.
             </p>
             <button
               type="submit"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-zinc-900 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-zinc-800 sm:w-auto dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200"
+              className="btn btn-primary w-full px-6 py-3 sm:w-auto"
             >
               Enregistrer le diagnostic
             </button>
@@ -150,15 +150,15 @@ export default async function DiagnosticPage({
         </form>
 
         {isCompleted && (
-          <div className="mt-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
-            <div className="border-b border-zinc-100 bg-zinc-50 px-6 py-5 dark:border-zinc-900 dark:bg-zinc-900/40">
-              <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
+          <div className="card mt-8 overflow-hidden">
+            <div className="border-b border-blue-100 bg-linear-to-r from-blue-50 to-white px-6 py-5">
+              <div className="flex items-center gap-2 text-blue-600">
                 <Sparkles className="h-4 w-4 shrink-0" />
                 <span className="min-w-0 text-xs font-semibold uppercase tracking-wide">
                   Synthèse du diagnostic
                 </span>
               </div>
-              <h2 className="mt-1 text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+              <h2 className="mt-1 text-lg font-semibold text-slate-900">
                 {diagnostic.recommended_modules.length} modules recommandés pour votre entreprise
               </h2>
             </div>
@@ -168,7 +168,7 @@ export default async function DiagnosticPage({
                 {diagnostic.recommended_modules.map((m) => (
                   <li
                     key={m}
-                    className="flex items-center gap-1.5 rounded-full bg-zinc-900 px-3 py-1.5 text-xs font-medium text-white dark:bg-white dark:text-zinc-900"
+                    className="flex items-center gap-1.5 rounded-full bg-linear-to-r from-blue-600 to-blue-500 px-3 py-1.5 text-xs font-semibold text-white"
                   >
                     <Check className="h-3 w-3 shrink-0" />
                     {MODULE_LABELS[m] ?? m}
@@ -176,9 +176,9 @@ export default async function DiagnosticPage({
                 ))}
               </ul>
 
-              <div className="mt-6 flex flex-col gap-3 border-t border-zinc-100 pt-5 sm:flex-row sm:items-center sm:justify-between dark:border-zinc-900">
+              <div className="mt-6 flex flex-col gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:items-center sm:justify-between">
                 {diagnostic.status === "validated" ? (
-                  <p className="flex items-center gap-2 text-sm font-medium text-emerald-700 dark:text-emerald-400">
+                  <p className="flex items-center gap-2 text-sm font-medium text-emerald-700">
                     <Check className="h-4 w-4 shrink-0" />
                     Diagnostic validé
                   </p>
@@ -186,7 +186,7 @@ export default async function DiagnosticPage({
                   <form action={validateAction}>
                     <button
                       type="submit"
-                      className="inline-flex items-center gap-2 rounded-lg border border-zinc-300 px-4 py-2.5 text-sm font-semibold text-zinc-800 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-900"
+                      className="btn btn-outline"
                     >
                       Valider le diagnostic
                     </button>
@@ -195,7 +195,7 @@ export default async function DiagnosticPage({
 
                 <Link
                   href="/dashboard"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200"
+                  className="btn btn-primary"
                 >
                   Accéder au tableau de bord
                   <ArrowRight className="h-4 w-4" />
@@ -219,12 +219,12 @@ function Toggle({
   defaultChecked?: boolean;
 }) {
   return (
-    <label className="flex min-w-0 cursor-pointer items-start gap-3 rounded-xl border border-zinc-200 p-3.5 transition-colors hover:border-zinc-300 has-[:checked]:border-zinc-900 has-[:checked]:bg-zinc-50 dark:border-zinc-800 dark:hover:border-zinc-700 dark:has-[:checked]:border-zinc-100 dark:has-[:checked]:bg-zinc-900">
+    <label className="flex min-w-0 cursor-pointer items-start gap-3 rounded-xl border border-slate-200 p-3.5 transition-colors hover:border-slate-300 has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50 has-[:checked]:shadow-[0_0_0_4px_rgba(37,99,235,0.1)]">
       <input type="checkbox" name={name} defaultChecked={defaultChecked} className="peer sr-only" />
-      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-zinc-300 text-transparent peer-checked:border-zinc-900 peer-checked:bg-zinc-900 peer-checked:text-white dark:border-zinc-700 dark:peer-checked:border-zinc-100 dark:peer-checked:bg-zinc-100 dark:peer-checked:text-zinc-900">
+      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-slate-300 text-transparent peer-checked:border-blue-600 peer-checked:bg-blue-600 peer-checked:text-white">
         <Check className="h-3.5 w-3.5" />
       </span>
-      <span className="min-w-0 text-sm text-zinc-700 dark:text-zinc-300">{label}</span>
+      <span className="min-w-0 text-sm text-slate-700">{label}</span>
     </label>
   );
 }
@@ -240,7 +240,7 @@ function TextArea({
 }) {
   return (
     <div>
-      <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{label}</label>
+      <label className="field-label">{label}</label>
       <textarea name={name} defaultValue={defaultValue} rows={2} className={fieldClass} />
     </div>
   );

@@ -16,10 +16,10 @@ export default function PurchasingHome() {
           <Link
             key={c.href}
             href={c.href}
-            className="rounded-lg border border-zinc-200 bg-white p-5 hover:border-zinc-400 dark:border-zinc-800 dark:bg-zinc-900"
+            className="card card-hover p-5"
           >
-            <h2 className="font-semibold text-zinc-900 dark:text-zinc-50">{c.title}</h2>
-            <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{c.description}</p>
+            <h2 className="font-semibold text-slate-900">{c.title}</h2>
+            <p className="mt-1 text-sm text-slate-500">{c.description}</p>
           </Link>
         ))}
       </div>

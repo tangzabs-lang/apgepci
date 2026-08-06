@@ -31,7 +31,7 @@ export default async function AuditPage({
           name="module"
           defaultValue={module}
           placeholder="Filtrer par module (ex: sales, hr...)"
-          className="w-full max-w-sm rounded-md border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-950"
+          className="field-input max-w-sm"
         />
       </form>
 

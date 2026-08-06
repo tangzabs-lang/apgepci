@@ -27,7 +27,7 @@ export function MemberRow({
           defaultValue={roleId}
           disabled={pending}
           onChange={(e) => startTransition(() => updateMemberRole(membershipId, e.target.value))}
-          className="rounded-md border border-zinc-300 px-2 py-1 text-sm dark:border-zinc-700 dark:bg-zinc-950"
+          className="field-input"
         >
           {roles.map((r) => (
             <option key={r.id} value={r.id}>
@@ -44,7 +44,7 @@ export function MemberRow({
           <button
             disabled={pending}
             onClick={() => startTransition(() => deactivateMember(membershipId))}
-            className="text-sm text-red-600 hover:underline dark:text-red-400"
+            className="text-sm text-red-600 hover:underline"
           >
             Suspendre
           </button>
@@ -52,7 +52,7 @@ export function MemberRow({
           <button
             disabled={pending}
             onClick={() => startTransition(() => reactivateMember(membershipId))}
-            className="text-sm text-green-600 hover:underline dark:text-green-400"
+            className="text-sm text-green-600 hover:underline"
           >
             Réactiver
           </button>

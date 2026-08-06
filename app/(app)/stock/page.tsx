@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getActiveCompany } from "@/lib/active-company";
-import { DataTable, PageHeader, Badge } from "@/components/table";
+import { DataTable, PageHeader, Badge, SectionTitle } from "@/components/table";
 
 export default async function StockPage() {
   const active = await getActiveCompany();
@@ -33,13 +33,13 @@ export default async function StockPage() {
           <div className="flex gap-2">
             <Link
               href="/stock/warehouses/new"
-              className="rounded-md border border-zinc-300 px-3 py-2 text-sm font-medium hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
+              className="btn btn-outline"
             >
               + Entrepôt
             </Link>
             <Link
               href="/stock/movements/new"
-              className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900"
+              className="btn btn-primary"
             >
               + Mouvement
             </Link>
@@ -47,7 +47,7 @@ export default async function StockPage() {
         }
       />
 
-      <h2 className="mb-2 text-sm font-semibold text-zinc-500 dark:text-zinc-400">Entrepôts</h2>
+      <SectionTitle>Entrepôts</SectionTitle>
       <DataTable
         rows={warehouses ?? []}
         columns={[
@@ -61,7 +61,7 @@ export default async function StockPage() {
         ]}
       />
 
-      <h2 className="mb-2 mt-8 text-sm font-semibold text-zinc-500 dark:text-zinc-400">Niveaux de stock</h2>
+      <SectionTitle className="mt-10">Niveaux de stock</SectionTitle>
       <DataTable
         rows={(levels ?? []).map((l, i) => ({ id: String(i), ...l }))}
         columns={[
@@ -83,7 +83,7 @@ export default async function StockPage() {
               const min = thresholdMap.get(`${r.warehouse_id}:${r.product_id}`);
               const low = min != null && quantity < min;
               return (
-                <span className={low ? "font-semibold text-red-600 dark:text-red-400" : ""}>
+                <span className={low ? "font-semibold text-red-600" : ""}>
                   {quantity}
                   {low && " (seuil bas)"}
                 </span>

@@ -23,7 +23,7 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
         title={`Commande ${order.reference}`}
         action={<Badge tone={order.status === "received" ? "green" : "default"}>{order.status}</Badge>}
       />
-      <p className="text-sm text-zinc-500 dark:text-zinc-400">Fournisseur : {order.supplier?.name ?? "—"}</p>
+      <p className="text-sm text-slate-500">Fournisseur : {order.supplier?.name ?? "—"}</p>
 
       {order.status !== "received" && (
         <div className="mt-4">

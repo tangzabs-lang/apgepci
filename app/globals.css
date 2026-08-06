@@ -1,46 +1,305 @@
 @import "tailwindcss";
 
+/* Thème unique bleu / blanc : les variantes `dark:` héritées deviennent inertes
+   (elles ne s'appliquent que si la classe `.dark` est posée explicitement). */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f4f7fd;
+  --foreground: #0f172a;
+
+  /* Palette de marque */
+  --brand-50: #eff6ff;
+  --brand-100: #dbeafe;
+  --brand-200: #bfdbfe;
+  --brand-300: #93c5fd;
+  --brand-400: #60a5fa;
+  --brand-500: #3b82f6;
+  --brand-600: #2563eb;
+  --brand-700: #1d4ed8;
+  --brand-800: #1e40af;
+  --brand-900: #1e3a8a;
+
+  --surface: #ffffff;
+  --surface-muted: #f8fafc;
+  --border-soft: #e2e8f0;
+
+  --ring: 0 0 0 4px rgb(37 99 235 / 0.12);
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 8px 24px -12px rgb(30 64 175 / 0.18);
+  --shadow-card-hover: 0 2px 4px rgb(15 23 42 / 0.05), 0 18px 40px -16px rgb(30 64 175 / 0.28);
+  --shadow-brand: 0 8px 20px -8px rgb(37 99 235 / 0.55);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand-50: var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-brand-200: var(--brand-200);
+  --color-brand-300: var(--brand-300);
+  --color-brand-400: var(--brand-400);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
+  --color-brand-800: var(--brand-800);
+  --color-brand-900: var(--brand-900);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Couleurs des graphiques (recharts) */
 :root {
-  --chart-series-1: #2a78d6;
-  --chart-grid: #e1e0d9;
-  --chart-axis: #c3c2b7;
-  --chart-muted: #898781;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --chart-series-1: #3987e5;
-    --chart-grid: #2c2c2a;
-    --chart-axis: #383835;
-    --chart-muted: #898781;
-  }
+  --chart-series-1: #2563eb;
+  --chart-series-2: #60a5fa;
+  --chart-series-3: #1e3a8a;
+  --chart-grid: #e2e8f0;
+  --chart-axis: #cbd5e1;
+  --chart-muted: #64748b;
 }
 
 html {
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--brand-200);
+  color: var(--brand-900);
+}
+
+/* Barres de défilement discrètes, teintées bleu */
+* {
+  scrollbar-color: var(--brand-200) transparent;
+  scrollbar-width: thin;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 9999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-300);
+  background-clip: content-box;
+}
+
+@layer components {
+  /* ---------- Surfaces ---------- */
+  .app-shell-bg {
+    background:
+      radial-gradient(1200px 600px at 100% -10%, rgb(191 219 254 / 0.5), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgb(219 234 254 / 0.6), transparent 55%),
+      var(--background);
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-hover {
+    transition:
+      box-shadow 0.2s ease,
+      transform 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .card-hover:hover {
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--brand-200);
+    transform: translateY(-2px);
+  }
+
+  .stat-card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #ffffff 0%, #f7faff 100%);
+    border: 1px solid var(--border-soft);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-card);
+  }
+  .stat-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--brand-600), var(--brand-400));
+    opacity: 0.9;
+  }
+
+  .panel-gradient {
+    background: linear-gradient(135deg, var(--brand-700) 0%, var(--brand-600) 45%, var(--brand-500) 100%);
+  }
+
+  /* ---------- Boutons ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    padding: 0.55rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    white-space: nowrap;
+    transition:
+      background-color 0.15s ease,
+      box-shadow 0.15s ease,
+      color 0.15s ease,
+      transform 0.15s ease;
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+  .btn:focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+  }
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .btn-primary {
+    color: #fff;
+    background: linear-gradient(180deg, var(--brand-500), var(--brand-600));
+    box-shadow: var(--shadow-brand);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: linear-gradient(180deg, var(--brand-600), var(--brand-700));
+  }
+
+  .btn-secondary {
+    color: var(--brand-700);
+    background: var(--brand-50);
+    border: 1px solid var(--brand-100);
+  }
+  .btn-secondary:hover:not(:disabled) {
+    background: var(--brand-100);
+  }
+
+  .btn-outline {
+    color: #334155;
+    background: #fff;
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 1px 2px rgb(15 23 42 / 0.04);
+  }
+  .btn-outline:hover:not(:disabled) {
+    background: var(--brand-50);
+    border-color: var(--brand-200);
+    color: var(--brand-700);
+  }
+
+  .btn-danger {
+    color: #b91c1c;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+  }
+  .btn-danger:hover:not(:disabled) {
+    background: #fee2e2;
+  }
+
+  /* ---------- Champs ---------- */
+  .field-label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #334155;
+  }
+
+  .field-input {
+    width: 100%;
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-soft);
+    background: #fff;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.875rem;
+    color: #0f172a;
+    outline: none;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease,
+      background-color 0.15s ease;
+  }
+  .field-input::placeholder {
+    color: #94a3b8;
+  }
+  .field-input:hover:not(:disabled) {
+    border-color: var(--brand-200);
+  }
+  .field-input:focus {
+    border-color: var(--brand-500);
+    box-shadow: var(--ring);
+  }
+  select.field-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.6rem center;
+    background-size: 1rem;
+    padding-right: 2rem;
+  }
+
+  /* ---------- Divers ---------- */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border-radius: 9999px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .title-gradient {
+    background: linear-gradient(120deg, #0f172a 0%, var(--brand-700) 60%, var(--brand-500) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .divide-soft > * + * {
+    border-top: 1px solid var(--border-soft);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-rise {
+  animation: rise-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise {
+    animation: none;
+  }
+  .card-hover:hover {
+    transform: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }

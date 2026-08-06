@@ -45,46 +45,46 @@ export default async function ForecastsPage() {
         action={
           <Link
             href="/forecasts/new"
-            className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900"
+            className="btn btn-primary"
           >
             + Prévision
           </Link>
         }
       />
 
-      <div className="overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
-        <table className="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800">
-          <thead className="bg-zinc-50 dark:bg-zinc-900">
-            <tr className="text-left text-xs font-semibold uppercase text-zinc-500 dark:text-zinc-400">
-              <th className="px-4 py-2">Sujet</th>
-              <th className="px-4 py-2">Période</th>
-              <th className="px-4 py-2">Prévu</th>
-              <th className="px-4 py-2">Réalisé</th>
-              <th className="px-4 py-2">Écart</th>
-              <th className="px-4 py-2">Taux</th>
-              <th className="px-4 py-2" />
+      <div className="card overflow-x-auto">
+        <table className="min-w-full divide-y divide-slate-100">
+          <thead className="bg-linear-to-r from-blue-50 to-white">
+            <tr className="border-b border-slate-200 text-left text-[0.7rem] font-bold uppercase tracking-widest text-blue-900/70">
+              <th className="whitespace-nowrap px-4 py-3">Sujet</th>
+              <th className="whitespace-nowrap px-4 py-3">Période</th>
+              <th className="whitespace-nowrap px-4 py-3">Prévu</th>
+              <th className="whitespace-nowrap px-4 py-3">Réalisé</th>
+              <th className="whitespace-nowrap px-4 py-3">Écart</th>
+              <th className="whitespace-nowrap px-4 py-3">Taux</th>
+              <th className="whitespace-nowrap px-4 py-3" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-200 bg-white dark:divide-zinc-800 dark:bg-zinc-900">
+          <tbody className="divide-y divide-slate-100 bg-white">
             {rows.map((r) => (
-              <tr key={r.id}>
-                <td className="px-4 py-2 text-sm">{SUBJECT_LABELS[r.subject] ?? r.subject}</td>
-                <td className="px-4 py-2 text-sm">
+              <tr className="transition-colors hover:bg-blue-50/50" key={r.id}>
+                <td className="px-4 py-3 text-sm text-slate-700">{SUBJECT_LABELS[r.subject] ?? r.subject}</td>
+                <td className="px-4 py-3 text-sm text-slate-700">
                   {r.period_start} → {r.period_end}
                 </td>
-                <td className="px-4 py-2 text-sm">{Number(r.target_value).toLocaleString("fr-FR")}</td>
-                <td className="px-4 py-2 text-sm">{r.actual.toLocaleString("fr-FR")}</td>
-                <td className="px-4 py-2 text-sm">
+                <td className="px-4 py-3 text-sm text-slate-700">{Number(r.target_value).toLocaleString("fr-FR")}</td>
+                <td className="px-4 py-3 text-sm text-slate-700">{r.actual.toLocaleString("fr-FR")}</td>
+                <td className="px-4 py-3 text-sm text-slate-700">
                   <Badge tone={r.variance >= 0 ? "green" : "red"}>
                     {r.variance >= 0 ? "+" : ""}
                     {r.variance.toLocaleString("fr-FR")}
                   </Badge>
                 </td>
-                <td className="px-4 py-2 text-sm">
+                <td className="px-4 py-3 text-sm text-slate-700">
                   {r.target_value ? `${(100 + r.variancePct).toFixed(0)}%` : "—"}
                 </td>
-                <td className="px-4 py-2 text-right">
-                  <Link href={`/forecasts/${r.id}`} className="text-sm font-medium underline">
+                <td className="px-4 py-3 text-right">
+                  <Link href={`/forecasts/${r.id}`} className="text-sm font-semibold text-blue-600 hover:underline">
                     Détails
                   </Link>
                 </td>
@@ -92,7 +92,7 @@ export default async function ForecastsPage() {
             ))}
             {rows.length === 0 && (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-sm text-zinc-500 dark:text-zinc-400">
+                <td colSpan={7} className="px-4 py-12 text-center text-sm text-slate-500">
                   Aucune prévision enregistrée.
                 </td>
               </tr>

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getActiveCompany } from "@/lib/active-company";
-import { PageHeader, Badge } from "@/components/table";
+import { PageHeader, Badge, SectionTitle } from "@/components/table";
 import { getActualValue, addVarianceComment } from "@/lib/actions/forecasts";
 import { ManualActualForm } from "./manual-actual-form";
 import { TextAreaField, TextField, SubmitButton } from "@/components/form";
@@ -33,7 +33,7 @@ export default async function ForecastDetailPage({ params }: { params: Promise<{
         <Stat label="Prévu" value={Number(forecast.target_value).toLocaleString("fr-FR")} />
         <Stat label="Réalisé" value={actual.toLocaleString("fr-FR")} />
         <div>
-          <p className="text-xs font-medium uppercase text-zinc-500 dark:text-zinc-400">Écart</p>
+          <p className="text-xs font-medium uppercase text-slate-500">Écart</p>
           <Badge tone={variance >= 0 ? "green" : "red"}>
             {variance >= 0 ? "+" : ""}
             {variance.toLocaleString("fr-FR")}
@@ -43,7 +43,7 @@ export default async function ForecastDetailPage({ params }: { params: Promise<{
 
       {!AUTO_SUBJECTS.has(forecast.subject) && (
         <div className="mt-6">
-          <p className="mb-2 text-sm font-medium text-zinc-700 dark:text-zinc-300">
+          <p className="field-label mb-2">
             Saisir une réalisation manuelle
           </p>
           <ManualActualForm forecastId={forecast.id} />
@@ -51,7 +51,7 @@ export default async function ForecastDetailPage({ params }: { params: Promise<{
       )}
 
       <div className="mt-8">
-        <h2 className="mb-2 text-sm font-semibold text-zinc-500 dark:text-zinc-400">Explication des écarts</h2>
+        <SectionTitle>Explication des écarts</SectionTitle>
         <form action={boundAddComment} className="flex max-w-xl flex-col gap-3">
           <TextAreaField label="Commentaire" name="comment" />
           <TextField label="Cause" name="cause" />
@@ -62,11 +62,11 @@ export default async function ForecastDetailPage({ params }: { params: Promise<{
 
         <ul className="mt-4 space-y-3">
           {(comments ?? []).map((c) => (
-            <li key={c.id} className="rounded-md border border-zinc-200 p-3 text-sm dark:border-zinc-800">
+            <li key={c.id} className="rounded-md border border-slate-200 p-3 text-sm">
               <p>{c.comment}</p>
-              {c.cause && <p className="text-zinc-500 dark:text-zinc-400">Cause : {c.cause}</p>}
+              {c.cause && <p className="text-slate-500">Cause : {c.cause}</p>}
               {c.corrective_action && (
-                <p className="text-zinc-500 dark:text-zinc-400">Action : {c.corrective_action}</p>
+                <p className="text-slate-500">Action : {c.corrective_action}</p>
               )}
             </li>
           ))}
@@ -79,8 +79,8 @@ export default async function ForecastDetailPage({ params }: { params: Promise<{
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="text-xs font-medium uppercase text-zinc-500 dark:text-zinc-400">{label}</p>
-      <p className="mt-1 text-xl font-semibold text-zinc-900 dark:text-zinc-50">{value}</p>
+      <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">{label}</p>
+      <p className="mt-1 text-xl font-bold tracking-tight text-slate-900">{value}</p>
     </div>
   );
 }

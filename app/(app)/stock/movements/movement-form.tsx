@@ -30,7 +30,7 @@ export function MovementForm({
   const [state, action] = useActionState<ActionState, FormData>(createStockMovement, undefined);
 
   return (
-    <form action={action} className="flex max-w-xl flex-col gap-4">
+    <form action={action} className="card flex max-w-2xl flex-col gap-4 p-5 sm:p-6">
       <input type="hidden" name="company_id" value={companyId} />
 
       <SelectField
@@ -48,7 +48,7 @@ export function MovementForm({
       <SelectField label="Type de mouvement" name="movement_type" required options={MOVEMENT_TYPES} />
       <TextField label="Quantité" name="quantity" type="number" step="0.001" required />
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <TextField label="Numéro de lot" name="lot_number" />
         <TextField label="Date d'expiration" name="expiry_date" type="date" />
       </div>

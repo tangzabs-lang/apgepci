@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { PageHeader, Badge } from "@/components/table";
+import { PageHeader, Badge, SectionTitle, StatTile } from "@/components/table";
 import { TaskList } from "./task-list";
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -24,7 +24,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
   return (
     <div>
       <PageHeader title={project.title} action={<Badge tone="green">{project.status}</Badge>} />
-      <p className="text-sm text-zinc-500 dark:text-zinc-400">Client : {project.client?.name ?? "—"}</p>
+      <p className="text-sm text-slate-500">Client : {project.client?.name ?? "—"}</p>
 
       <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
         <Stat label="Budget" value={Number(project.budget ?? 0).toLocaleString("fr-FR")} />
@@ -32,21 +32,16 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         <Stat label="Recettes" value={totalRevenues.toLocaleString("fr-FR")} />
         <Stat label="Marge" value={margin.toLocaleString("fr-FR")} />
       </div>
-      <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+      <p className="mt-2 text-sm text-slate-500">
         Reste à engager : {remaining.toLocaleString("fr-FR")}
       </p>
 
-      <h2 className="mb-2 mt-8 text-sm font-semibold text-zinc-500 dark:text-zinc-400">Tâches</h2>
+      <SectionTitle className="mt-10">Tâches</SectionTitle>
       <TaskList projectId={project.id} tasks={tasks ?? []} />
     </div>
   );
 }
 
 function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
-      <p className="text-xs font-medium uppercase text-zinc-500 dark:text-zinc-400">{label}</p>
-      <p className="mt-2 text-xl font-semibold text-zinc-900 dark:text-zinc-50">{value}</p>
-    </div>
-  );
+  return <StatTile label={label} value={value} />;
 }

@@ -46,7 +46,7 @@ export default async function ClientsPage({
             />
             <Link
               href="/clients/new"
-              className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900"
+              className="btn btn-primary"
             >
               + Nouveau client
             </Link>
@@ -60,7 +60,7 @@ export default async function ClientsPage({
           name="q"
           defaultValue={q}
           placeholder="Rechercher un client..."
-          className="w-full max-w-sm rounded-md border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-950"
+          className="field-input max-w-sm"
         />
       </form>
 

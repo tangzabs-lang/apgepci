@@ -66,7 +66,7 @@ export function SalesForm({
   }
 
   return (
-    <form action={action} className="flex max-w-3xl flex-col gap-4">
+    <form action={action} className="card flex max-w-3xl flex-col gap-4 p-5 sm:p-6">
       <input type="hidden" name="company_id" value={companyId} />
       {defaultValues?.id && <input type="hidden" name="id" value={defaultValues.id} />}
       <input type="hidden" name="lines_json" value={JSON.stringify(lines.filter((l) => l.product_id))} />
@@ -100,11 +100,11 @@ export function SalesForm({
       </div>
 
       <div>
-        <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Articles</label>
-        <div className="mt-2 overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
-          <table className="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800">
-            <thead className="bg-zinc-50 dark:bg-zinc-900">
-              <tr className="text-left text-xs font-semibold uppercase text-zinc-500 dark:text-zinc-400">
+        <label className="field-label">Articles</label>
+        <div className="mt-2 overflow-x-auto card overflow-hidden">
+          <table className="min-w-full divide-y divide-slate-100">
+            <thead className="bg-linear-to-r from-blue-50 to-white">
+              <tr className="border-b border-slate-200 text-left text-[0.7rem] font-bold uppercase tracking-widest text-blue-900/70">
                 <th className="px-3 py-2">Article</th>
                 <th className="px-3 py-2">Quantité</th>
                 <th className="px-3 py-2">Prix unitaire</th>
@@ -113,14 +113,14 @@ export function SalesForm({
                 <th className="px-3 py-2" />
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
+            <tbody className="divide-y divide-slate-100">
               {lines.map((line, i) => (
-                <tr key={i}>
+                <tr className="transition-colors hover:bg-blue-50/50" key={i}>
                   <td className="p-2">
                     <select
                       value={line.product_id}
                       onChange={(e) => onProductChange(i, e.target.value)}
-                      className="w-48 rounded-md border border-zinc-300 px-2 py-1 text-sm dark:border-zinc-700 dark:bg-zinc-950"
+                      className="w-48 field-input"
                     >
                       <option value="">Sélectionner...</option>
                       {products.map((p) => (
@@ -137,7 +137,7 @@ export function SalesForm({
                       step="0.01"
                       value={line.quantity}
                       onChange={(e) => updateLine(i, { quantity: Number(e.target.value) })}
-                      className="w-24 rounded-md border border-zinc-300 px-2 py-1 text-sm dark:border-zinc-700 dark:bg-zinc-950"
+                      className="w-24 field-input"
                     />
                   </td>
                   <td className="p-2">
@@ -147,7 +147,7 @@ export function SalesForm({
                       step="0.01"
                       value={line.unit_price}
                       onChange={(e) => updateLine(i, { unit_price: Number(e.target.value) })}
-                      className="w-28 rounded-md border border-zinc-300 px-2 py-1 text-sm dark:border-zinc-700 dark:bg-zinc-950"
+                      className="w-28 field-input"
                     />
                   </td>
                   <td className="p-2">
@@ -157,7 +157,7 @@ export function SalesForm({
                       step="0.01"
                       value={line.discount}
                       onChange={(e) => updateLine(i, { discount: Number(e.target.value) })}
-                      className="w-24 rounded-md border border-zinc-300 px-2 py-1 text-sm dark:border-zinc-700 dark:bg-zinc-950"
+                      className="w-24 field-input"
                     />
                   </td>
                   <td className="p-2">
@@ -167,14 +167,14 @@ export function SalesForm({
                       step="0.01"
                       value={line.tax_rate}
                       onChange={(e) => updateLine(i, { tax_rate: Number(e.target.value) })}
-                      className="w-20 rounded-md border border-zinc-300 px-2 py-1 text-sm dark:border-zinc-700 dark:bg-zinc-950"
+                      className="w-20 field-input"
                     />
                   </td>
                   <td className="p-2">
                     <button
                       type="button"
                       onClick={() => setLines((prev) => prev.filter((_, idx) => idx !== i))}
-                      className="text-sm text-red-600 hover:underline dark:text-red-400"
+                      className="text-sm text-red-600 hover:underline"
                     >
                       Retirer
                     </button>
@@ -189,7 +189,7 @@ export function SalesForm({
           onClick={() =>
             setLines((prev) => [...prev, { product_id: "", quantity: 1, unit_price: 0, discount: 0, tax_rate: 0 }])
           }
-          className="mt-2 text-sm font-medium text-zinc-900 underline dark:text-zinc-50"
+          className="mt-2 text-sm font-semibold text-blue-600 hover:text-blue-700 hover:underline"
         >
           + Ajouter un article
         </button>
@@ -198,18 +198,18 @@ export function SalesForm({
       <div className="flex justify-end">
         <dl className="w-64 space-y-1 text-sm">
           <div className="flex justify-between">
-            <dt className="text-zinc-500 dark:text-zinc-400">Sous-total</dt>
+            <dt className="text-slate-500">Sous-total</dt>
             <dd>{totals.subtotal.toLocaleString("fr-FR")}</dd>
           </div>
           <div className="flex justify-between">
-            <dt className="text-zinc-500 dark:text-zinc-400">Remises</dt>
+            <dt className="text-slate-500">Remises</dt>
             <dd>-{totals.discount.toLocaleString("fr-FR")}</dd>
           </div>
           <div className="flex justify-between">
-            <dt className="text-zinc-500 dark:text-zinc-400">Taxes</dt>
+            <dt className="text-slate-500">Taxes</dt>
             <dd>{totals.tax.toLocaleString("fr-FR")}</dd>
           </div>
-          <div className="flex justify-between border-t border-zinc-200 pt-1 font-semibold dark:border-zinc-800">
+          <div className="flex justify-between border-t border-slate-200 pt-1 font-semibold">
             <dt>Total</dt>
             <dd>{totals.total.toLocaleString("fr-FR")}</dd>
           </div>

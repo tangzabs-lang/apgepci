@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getActiveCompany } from "@/lib/active-company";
-import { DataTable, PageHeader, Badge } from "@/components/table";
+import { DataTable, PageHeader, Badge, SectionTitle } from "@/components/table";
 
 export default async function CrmPage() {
   const active = await getActiveCompany();
@@ -27,20 +27,20 @@ export default async function CrmPage() {
         description="Prospects, opportunités et réclamations."
         action={
           <div className="flex gap-2">
-            <Link href="/crm/prospects/new" className="rounded-md border border-zinc-300 px-3 py-2 text-sm font-medium hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800">
+            <Link href="/crm/prospects/new" className="btn btn-outline">
               + Prospect
             </Link>
-            <Link href="/crm/opportunities/new" className="rounded-md border border-zinc-300 px-3 py-2 text-sm font-medium hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800">
+            <Link href="/crm/opportunities/new" className="btn btn-outline">
               + Opportunité
             </Link>
-            <Link href="/crm/complaints/new" className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900">
+            <Link href="/crm/complaints/new" className="btn btn-primary">
               + Réclamation
             </Link>
           </div>
         }
       />
 
-      <h2 className="mb-2 text-sm font-semibold text-zinc-500 dark:text-zinc-400">Prospects</h2>
+      <SectionTitle>Prospects</SectionTitle>
       <DataTable
         rows={prospects ?? []}
         columns={[
@@ -51,7 +51,7 @@ export default async function CrmPage() {
         ]}
       />
 
-      <h2 className="mb-2 mt-8 text-sm font-semibold text-zinc-500 dark:text-zinc-400">Opportunités</h2>
+      <SectionTitle className="mt-10">Opportunités</SectionTitle>
       <DataTable
         rows={opportunities ?? []}
         columns={[
@@ -62,7 +62,7 @@ export default async function CrmPage() {
         ]}
       />
 
-      <h2 className="mb-2 mt-8 text-sm font-semibold text-zinc-500 dark:text-zinc-400">Réclamations</h2>
+      <SectionTitle className="mt-10">Réclamations</SectionTitle>
       <DataTable
         rows={complaints ?? []}
         columns={[

@@ -14,14 +14,14 @@ export function OnboardingShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-1 flex-col bg-zinc-50 dark:bg-zinc-950">
-      <div className="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
+    <div className="app-shell-bg flex flex-1 flex-col">
+      <div className="border-b border-blue-100 bg-white/85 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-4 sm:px-6">
           <Link href="/" className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-md bg-zinc-900 text-xs font-bold text-white dark:bg-white dark:text-zinc-900">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-linear-to-br from-blue-600 to-blue-400 text-xs font-black text-white">
               A
             </span>
-            <span className="hidden text-sm font-semibold tracking-tight text-zinc-900 sm:inline dark:text-zinc-50">
+            <span className="hidden text-sm font-semibold tracking-tight text-slate-900 sm:inline">
               APGEPCI
             </span>
           </Link>
@@ -35,8 +35,8 @@ export function OnboardingShell({
                     <span
                       className={`h-px w-5 sm:w-10 ${
                         state === "upcoming" && s.number - 1 >= step
-                          ? "bg-zinc-200 dark:bg-zinc-800"
-                          : "bg-zinc-300 dark:bg-zinc-700"
+                          ? "bg-blue-100"
+                          : "bg-blue-300"
                       }`}
                     />
                   )}
@@ -44,10 +44,10 @@ export function OnboardingShell({
                     <span
                       className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${
                         state === "done"
-                          ? "bg-zinc-900 text-white dark:bg-white dark:text-zinc-900"
+                          ? "bg-linear-to-br from-blue-600 to-blue-400 text-white shadow-[0_6px_14px_-6px_rgba(37,99,235,0.9)]"
                           : state === "active"
-                            ? "border-2 border-zinc-900 text-zinc-900 dark:border-white dark:text-white"
-                            : "border border-zinc-300 text-zinc-400 dark:border-zinc-700 dark:text-zinc-600"
+                            ? "border-2 border-blue-600 text-blue-700"
+                            : "border border-slate-300 text-slate-400"
                       }`}
                     >
                       {state === "done" ? <Check className="h-3.5 w-3.5" /> : s.number}
@@ -55,8 +55,8 @@ export function OnboardingShell({
                     <span
                       className={`hidden min-w-0 text-sm font-medium sm:inline ${
                         state === "upcoming"
-                          ? "text-zinc-400 dark:text-zinc-600"
-                          : "text-zinc-900 dark:text-zinc-50"
+                          ? "text-slate-400"
+                          : "text-blue-700"
                       }`}
                     >
                       {s.label}

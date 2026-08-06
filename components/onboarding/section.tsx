@@ -12,15 +12,15 @@ export function Section({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl border border-zinc-200 bg-white p-5 sm:p-6 dark:border-zinc-800 dark:bg-zinc-950">
+    <div className="card card-hover p-5 sm:p-6">
       <div className="flex items-center gap-3">
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-blue-600 to-blue-400 text-white shadow-[0_8px_18px_-10px_rgba(37,99,235,0.9)]">
           <Icon className="h-5 w-5" />
         </span>
         <div className="min-w-0">
-          <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{title}</h2>
+          <h2 className="text-sm font-bold text-slate-900">{title}</h2>
           {description && (
-            <p className="min-w-0 text-xs text-zinc-500 dark:text-zinc-400">{description}</p>
+            <p className="min-w-0 text-xs text-slate-500">{description}</p>
           )}
         </div>
       </div>

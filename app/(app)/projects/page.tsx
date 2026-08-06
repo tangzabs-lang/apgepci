@@ -19,7 +19,7 @@ export default async function ProjectsPage() {
       <PageHeader
         title="Projets & marchés"
         action={
-          <Link href="/projects/new" className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900">
+          <Link href="/projects/new" className="btn btn-primary">
             + Nouveau projet
           </Link>
         }

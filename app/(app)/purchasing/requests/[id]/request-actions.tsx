@@ -25,7 +25,7 @@ export function RequestActions({
         <button
           disabled={pending}
           onClick={() => startTransition(() => submitPurchaseRequest(requestId))}
-          className="rounded-md border border-zinc-300 px-3 py-1.5 text-sm font-medium hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
+          className="btn btn-outline"
         >
           Soumettre
         </button>
@@ -35,14 +35,14 @@ export function RequestActions({
           <button
             disabled={pending}
             onClick={() => startTransition(() => decidePurchaseRequest(requestId, "approved"))}
-            className="rounded-md border border-green-300 px-3 py-1.5 text-sm font-medium text-green-700 hover:bg-green-50 dark:border-green-800 dark:text-green-400"
+            className="rounded-md border border-green-300 px-3 py-1.5 text-sm font-medium text-green-700 hover:bg-green-50"
           >
             Approuver
           </button>
           <button
             disabled={pending}
             onClick={() => startTransition(() => decidePurchaseRequest(requestId, "rejected"))}
-            className="rounded-md border border-red-300 px-3 py-1.5 text-sm font-medium text-red-700 hover:bg-red-50 dark:border-red-800 dark:text-red-400"
+            className="rounded-md border border-red-300 px-3 py-1.5 text-sm font-medium text-red-700 hover:bg-red-50"
           >
             Rejeter
           </button>
@@ -53,7 +53,7 @@ export function RequestActions({
           <select
             value={supplierId}
             onChange={(e) => setSupplierId(e.target.value)}
-            className="rounded-md border border-zinc-300 px-2 py-1.5 text-sm dark:border-zinc-700 dark:bg-zinc-950"
+            className="field-input"
           >
             <option value="">Fournisseur...</option>
             {suppliers.map((s) => (
@@ -69,7 +69,7 @@ export function RequestActions({
                 await convertRequestToOrder(requestId, supplierId);
               })
             }
-            className="rounded-md bg-zinc-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-60 dark:bg-zinc-50 dark:text-zinc-900"
+            className="btn btn-primary"
           >
             Transformer en commande
           </button>

@@ -88,10 +88,12 @@ export default async function SaleDetailPage({ params }: { params: Promise<{ id:
         />
       </div>
 
-      <dl className="mt-6 max-w-xs space-y-1 text-sm">
-        <div className="flex justify-between">
-          <dt className="text-zinc-500 dark:text-zinc-400">Total</dt>
-          <dd className="font-semibold">{Number(sale.total).toLocaleString("fr-FR")}</dd>
+      <dl className="card mt-6 max-w-xs p-5 text-sm">
+        <div className="flex items-center justify-between gap-6">
+          <dt className="font-semibold uppercase tracking-wide text-slate-400">Total</dt>
+          <dd className="text-xl font-bold text-blue-700">
+            {Number(sale.total).toLocaleString("fr-FR")}
+          </dd>
         </div>
       </dl>
     </div>

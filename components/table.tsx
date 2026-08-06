@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Inbox, Pencil } from "lucide-react";
 
 export function DataTable<T extends { id: string }>({
   columns,
@@ -13,50 +14,56 @@ export function DataTable<T extends { id: string }>({
 }) {
   if (rows.length === 0) {
     return (
-      <div className="rounded-lg border border-dashed border-zinc-300 p-8 text-center text-sm text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">
-        {emptyMessage}
+      <div className="card flex flex-col items-center justify-center gap-3 border-dashed px-6 py-14 text-center">
+        <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+          <Inbox className="h-6 w-6" />
+        </span>
+        <p className="max-w-sm text-sm text-slate-500">{emptyMessage}</p>
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
-      <table className="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800">
-        <thead className="bg-zinc-50 dark:bg-zinc-900">
-          <tr>
-            {columns.map((c) => (
-              <th
-                key={c.key}
-                className="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400"
-              >
-                {c.label}
-              </th>
-            ))}
-            {editHref && <th className="px-4 py-2" />}
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-zinc-200 bg-white dark:divide-zinc-800 dark:bg-zinc-900">
-          {rows.map((row) => (
-            <tr key={row.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
+    <div className="card overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="min-w-full">
+          <thead>
+            <tr className="border-b border-slate-200 bg-linear-to-r from-blue-50 to-white">
               {columns.map((c) => (
-                <td key={c.key} className="px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300">
-                  {c.render ? c.render(row) : String((row as Record<string, unknown>)[c.key] ?? "—")}
-                </td>
+                <th
+                  key={c.key}
+                  className="whitespace-nowrap px-4 py-3 text-left text-[0.7rem] font-bold uppercase tracking-widest text-blue-900/70"
+                >
+                  {c.label}
+                </th>
               ))}
-              {editHref && (
-                <td className="px-4 py-2 text-right">
-                  <Link
-                    href={editHref(row)}
-                    className="text-sm font-medium text-zinc-900 underline dark:text-zinc-50"
-                  >
-                    Modifier
-                  </Link>
-                </td>
-              )}
+              {editHref && <th className="px-4 py-3" />}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            {rows.map((row) => (
+              <tr key={row.id} className="group transition-colors hover:bg-blue-50/50">
+                {columns.map((c) => (
+                  <td key={c.key} className="px-4 py-3 text-sm text-slate-700">
+                    {c.render ? c.render(row) : String((row as Record<string, unknown>)[c.key] ?? "—")}
+                  </td>
+                ))}
+                {editHref && (
+                  <td className="px-4 py-3 text-right">
+                    <Link
+                      href={editHref(row)}
+                      className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-sm font-semibold text-blue-600 transition-colors hover:bg-blue-100/70 hover:text-blue-700"
+                    >
+                      <Pencil className="h-3.5 w-3.5" />
+                      Modifier
+                    </Link>
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
@@ -71,28 +78,99 @@ export function PageHeader({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="mb-6 flex items-center justify-between">
-      <div>
-        <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">{title}</h1>
+    <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div className="min-w-0">
+        <span className="mb-2 block h-1 w-12 rounded-full bg-linear-to-r from-blue-600 to-blue-300" />
+        <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">{title}</h1>
         {description && (
-          <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{description}</p>
+          <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-slate-500">{description}</p>
         )}
       </div>
-      {action}
+      {action && <div className="flex flex-wrap items-center gap-2">{action}</div>}
     </div>
   );
 }
 
-export function Badge({ children, tone = "default" }: { children: React.ReactNode; tone?: "default" | "green" | "red" | "yellow" }) {
-  const tones: Record<string, string> = {
-    default: "bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300",
-    green: "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400",
-    red: "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400",
-    yellow: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400",
-  };
+/** Intertitre de section : pastille bleue + libellé, utilisé sur les pages listes. */
+export function SectionTitle({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
-    <span className={`inline-block rounded-full px-2 py-0.5 text-xs font-medium ${tones[tone]}`}>
+    <h2 className={`mb-3 flex items-center gap-2.5 text-sm font-bold uppercase tracking-wide text-slate-600 ${className}`}>
+      <span className="h-4 w-1 rounded-full bg-linear-to-b from-blue-600 to-blue-300" />
       {children}
-    </span>
+    </h2>
+  );
+}
+
+/** Tuile d'indicateur : chiffre clé sur fond blanc, liseré bleu. */
+export function StatTile({
+  label,
+  value,
+  hint,
+}: {
+  label: string;
+  value: React.ReactNode;
+  hint?: string;
+}) {
+  return (
+    <div className="stat-card p-4">
+      <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">{label}</p>
+      <p className="mt-1.5 text-2xl font-bold tracking-tight text-slate-900">{value}</p>
+      {hint && <p className="mt-1 text-xs text-slate-400">{hint}</p>}
+    </div>
+  );
+}
+
+const TONES: Record<string, string> = {
+  default: "bg-slate-100 text-slate-700 ring-slate-200",
+  blue: "bg-blue-50 text-blue-700 ring-blue-200",
+  green: "bg-emerald-50 text-emerald-700 ring-emerald-200",
+  red: "bg-red-50 text-red-700 ring-red-200",
+  yellow: "bg-amber-50 text-amber-700 ring-amber-200",
+};
+
+export function Badge({
+  children,
+  tone = "default",
+}: {
+  children: React.ReactNode;
+  tone?: "default" | "blue" | "green" | "red" | "yellow";
+}) {
+  return (
+    <span className={`chip ring-1 ring-inset ${TONES[tone]}`}>{children}</span>
+  );
+}
+
+export function Card({
+  title,
+  description,
+  action,
+  children,
+  className = "",
+}: {
+  title?: string;
+  description?: string;
+  action?: React.ReactNode;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <section className={`card card-hover p-5 sm:p-6 ${className}`}>
+      {(title || action) && (
+        <div className="mb-4 flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            {title && <h2 className="text-base font-bold text-slate-900">{title}</h2>}
+            {description && <p className="mt-1 text-sm text-slate-500">{description}</p>}
+          </div>
+          {action}
+        </div>
+      )}
+      {children}
+    </section>
   );
 }

@@ -32,11 +32,11 @@ export function ProductForm({
   const [state, action] = useActionState<ActionState, FormData>(upsertProduct, undefined);
 
   return (
-    <form action={action} className="flex max-w-xl flex-col gap-4">
+    <form action={action} className="card flex max-w-2xl flex-col gap-4 p-5 sm:p-6">
       <input type="hidden" name="company_id" value={companyId} />
       {defaultValues?.id && <input type="hidden" name="id" value={defaultValues.id} />}
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <TextField label="Code" name="code" defaultValue={defaultValues?.code ?? undefined} />
         <SelectField
           label="Type"
@@ -54,13 +54,13 @@ export function ProductForm({
       <TextField label="Désignation" name="name" required defaultValue={defaultValues?.name} />
       <TextAreaField label="Description" name="description" defaultValue={defaultValues?.description ?? undefined} />
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
-          <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Catégorie</label>
+          <label className="field-label">Catégorie</label>
           <input
             name="category_name"
             list="product-categories"
-            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-950"
+            className="field-input mt-1.5"
           />
           <datalist id="product-categories">
             {categories.map((c) => (
@@ -69,11 +69,11 @@ export function ProductForm({
           </datalist>
         </div>
         <div>
-          <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Unité</label>
+          <label className="field-label">Unité</label>
           <input
             name="unit_symbol"
             list="units"
-            className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-950"
+            className="field-input mt-1.5"
             placeholder="pièce, kg, litre..."
           />
           <datalist id="units">
@@ -84,7 +84,7 @@ export function ProductForm({
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <TextField
           label="Prix d'achat"
           name="purchase_price"

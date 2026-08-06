@@ -28,11 +28,11 @@ export function ExpenseForm({
   const [state, action] = useActionState<ActionState, FormData>(upsertExpense, undefined);
 
   return (
-    <form action={action} className="flex max-w-xl flex-col gap-4">
+    <form action={action} className="card flex max-w-2xl flex-col gap-4 p-5 sm:p-6">
       <input type="hidden" name="company_id" value={companyId} />
       {defaultValues?.id && <input type="hidden" name="id" value={defaultValues.id} />}
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <TextField
           label="Date"
           name="expense_date"
@@ -51,7 +51,7 @@ export function ExpenseForm({
       </div>
 
       <div>
-        <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+        <label className="field-label">
           Catégorie <span className="text-red-500">*</span>
         </label>
         <input
@@ -59,7 +59,7 @@ export function ExpenseForm({
           list="expense-categories"
           required
           defaultValue={defaultValues?.category_name}
-          className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-950"
+          className="field-input mt-1.5"
         />
         <datalist id="expense-categories">
           {categories.map((c) => (

@@ -5,7 +5,7 @@ import type { LucideIcon } from "lucide-react";
 import { Eye, EyeOff } from "lucide-react";
 
 const inputClass =
-  "w-full rounded-lg border border-zinc-300 bg-white py-2.5 pl-10 pr-3 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none transition-colors focus:border-zinc-900 focus:ring-4 focus:ring-zinc-900/5 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-50 dark:placeholder:text-zinc-600 dark:focus:border-zinc-100 dark:focus:ring-zinc-100/5";
+  "field-input py-2.5 pl-10 pr-3";
 
 export function TextField({
   label,
@@ -29,12 +29,12 @@ export function TextField({
     <div>
       <label
         htmlFor={id}
-        className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
+        className="field-label"
       >
         {label}
       </label>
       <div className="relative mt-1.5">
-        <Icon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400 dark:text-zinc-500" />
+        <Icon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-blue-500" />
         <input
           id={id}
           name={name}
@@ -67,14 +67,14 @@ export function PasswordField({
     <div>
       <label
         htmlFor={id}
-        className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
+        className="field-label"
       >
         {label}
       </label>
       <div className="relative mt-1.5">
         <svg
           aria-hidden
-          className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400 dark:text-zinc-500"
+          className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-blue-500"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -98,13 +98,13 @@ export function PasswordField({
           onClick={() => setVisible((v) => !v)}
           tabIndex={-1}
           aria-label={visible ? "Masquer le mot de passe" : "Afficher le mot de passe"}
-          className="absolute right-2.5 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300"
+          className="absolute right-2.5 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded text-slate-400 transition-colors hover:text-blue-600"
         >
           {visible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
         </button>
       </div>
       {helperText && (
-        <p className="mt-1.5 text-xs text-zinc-400 dark:text-zinc-500">{helperText}</p>
+        <p className="mt-1.5 text-xs text-slate-400">{helperText}</p>
       )}
     </div>
   );

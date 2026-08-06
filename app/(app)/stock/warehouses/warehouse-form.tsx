@@ -15,7 +15,7 @@ export function WarehouseForm({
   const [state, action] = useActionState<ActionState, FormData>(upsertWarehouse, undefined);
 
   return (
-    <form action={action} className="flex max-w-xl flex-col gap-4">
+    <form action={action} className="card flex max-w-2xl flex-col gap-4 p-5 sm:p-6">
       <input type="hidden" name="company_id" value={companyId} />
       <TextField label="Nom" name="name" required />
       <SelectField

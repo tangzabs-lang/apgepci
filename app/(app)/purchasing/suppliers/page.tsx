@@ -21,7 +21,7 @@ export default async function SuppliersPage() {
         action={
           <Link
             href="/purchasing/suppliers/new"
-            className="rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-900"
+            className="btn btn-primary"
           >
             + Fournisseur
           </Link>

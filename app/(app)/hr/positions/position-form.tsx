@@ -15,7 +15,7 @@ export function PositionForm({
   const [state, action] = useActionState<ActionState, FormData>(upsertPosition, undefined);
 
   return (
-    <form action={action} className="flex max-w-xl flex-col gap-4">
+    <form action={action} className="card flex max-w-2xl flex-col gap-4 p-5 sm:p-6">
       <input type="hidden" name="company_id" value={companyId} />
       <TextField label="Intitulé du poste" name="title" required />
       <SelectField label="Service" name="org_unit_id" options={orgUnits.map((o) => ({ value: o.id, label: o.name }))} />

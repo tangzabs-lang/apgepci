@@ -29,7 +29,7 @@ const axisTick = { fill: "var(--chart-muted)", fontSize: 12 } as const;
 /** Courbe des ventes mensuelles — visuel principal du tableau de bord. */
 export function SalesTrendChart({ data }: { data: { month: string; total: number }[] }) {
   return (
-    <div className="h-72 w-full">
+    <div className="h-56 w-full sm:h-72">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
           <defs>
@@ -80,7 +80,7 @@ export function SalesExpensesChart({
   data: { month: string; sales: number; expenses: number }[];
 }) {
   return (
-    <div className="h-72 w-full">
+    <div className="h-56 w-full sm:h-72">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }} barGap={4}>
           <CartesianGrid vertical={false} stroke="var(--chart-grid)" strokeDasharray="4 4" />
@@ -125,7 +125,7 @@ export function SalesExpensesChart({
 export function RankingChart({ data }: { data: { label: string; value: number }[] }) {
   const palette = ["#1d4ed8", "#2563eb", "#3b82f6", "#60a5fa", "#93c5fd"];
   return (
-    <div className="h-64 w-full">
+    <div className="h-56 w-full sm:h-64">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} layout="vertical" margin={{ top: 4, right: 16, left: 0, bottom: 0 }}>
           <CartesianGrid horizontal={false} stroke="var(--chart-grid)" strokeDasharray="4 4" />

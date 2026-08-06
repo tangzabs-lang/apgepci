@@ -2,25 +2,16 @@
 
 import Link from "next/link";
 import { useActionState } from "react";
-import { AlertCircle, ArrowRight, ClipboardCheck, Loader2, Mail, Sparkles, User } from "lucide-react";
+import { AlertCircle, ArrowRight, Loader2, Mail, User } from "lucide-react";
 import { signup } from "@/lib/actions/auth";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { PasswordField, TextField } from "@/components/auth/fields";
-
-const PANEL_POINTS = [
-  { icon: Sparkles, label: "Un diagnostic guidé recommande les modules adaptés à votre secteur" },
-  { icon: ClipboardCheck, label: "Trois modèles de gestion à comparer et personnaliser" },
-  { icon: User, label: "Invitez ensuite votre équipe avec des rôles précis" },
-];
 
 export default function SignupPage() {
   const [state, action, pending] = useActionState(signup, undefined);
 
   return (
     <AuthShell
-      panelEyebrow="Nouvel espace"
-      panelTitle="Créez votre espace entreprise en quelques minutes."
-      panelPoints={PANEL_POINTS}
       eyebrow="Inscription"
       title="Créer votre compte APGEPCI"
       subtitle="Vous pourrez ensuite décrire votre entreprise et créer son espace dédié."

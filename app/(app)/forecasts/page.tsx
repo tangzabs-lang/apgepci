@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getActiveCompany } from "@/lib/active-company";
-import { PageHeader, Badge } from "@/components/table";
+import { DataTable, PageHeader, Badge } from "@/components/table";
 import { getActualValue } from "@/lib/actions/forecasts";
 
 const SUBJECT_LABELS: Record<string, string> = {
@@ -52,54 +52,44 @@ export default async function ForecastsPage() {
         }
       />
 
-      <div className="card overflow-x-auto">
-        <table className="min-w-full divide-y divide-slate-100">
-          <thead className="bg-linear-to-r from-blue-50 to-white">
-            <tr className="border-b border-slate-200 text-left text-[0.7rem] font-bold uppercase tracking-widest text-blue-900/70">
-              <th className="whitespace-nowrap px-4 py-3">Sujet</th>
-              <th className="whitespace-nowrap px-4 py-3">Période</th>
-              <th className="whitespace-nowrap px-4 py-3">Prévu</th>
-              <th className="whitespace-nowrap px-4 py-3">Réalisé</th>
-              <th className="whitespace-nowrap px-4 py-3">Écart</th>
-              <th className="whitespace-nowrap px-4 py-3">Taux</th>
-              <th className="whitespace-nowrap px-4 py-3" />
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100 bg-white">
-            {rows.map((r) => (
-              <tr className="transition-colors hover:bg-blue-50/50" key={r.id}>
-                <td className="px-4 py-3 text-sm text-slate-700">{SUBJECT_LABELS[r.subject] ?? r.subject}</td>
-                <td className="px-4 py-3 text-sm text-slate-700">
-                  {r.period_start} → {r.period_end}
-                </td>
-                <td className="px-4 py-3 text-sm text-slate-700">{Number(r.target_value).toLocaleString("fr-FR")}</td>
-                <td className="px-4 py-3 text-sm text-slate-700">{r.actual.toLocaleString("fr-FR")}</td>
-                <td className="px-4 py-3 text-sm text-slate-700">
-                  <Badge tone={r.variance >= 0 ? "green" : "red"}>
-                    {r.variance >= 0 ? "+" : ""}
-                    {r.variance.toLocaleString("fr-FR")}
-                  </Badge>
-                </td>
-                <td className="px-4 py-3 text-sm text-slate-700">
-                  {r.target_value ? `${(100 + r.variancePct).toFixed(0)}%` : "—"}
-                </td>
-                <td className="px-4 py-3 text-right">
-                  <Link href={`/forecasts/${r.id}`} className="text-sm font-semibold text-blue-600 hover:underline">
-                    Détails
-                  </Link>
-                </td>
-              </tr>
-            ))}
-            {rows.length === 0 && (
-              <tr>
-                <td colSpan={7} className="px-4 py-12 text-center text-sm text-slate-500">
-                  Aucune prévision enregistrée.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+      <DataTable
+        rows={rows}
+        emptyMessage="Aucune prévision enregistrée."
+        editHref={(r) => `/forecasts/${r.id}`}
+        columns={[
+          { key: "subject", label: "Sujet", render: (r) => SUBJECT_LABELS[r.subject] ?? r.subject },
+          { key: "period", label: "Période", render: (r) => `${r.period_start} → ${r.period_end}` },
+          {
+            key: "target_value",
+            label: "Prévu",
+            render: (r) => Number(r.target_value).toLocaleString("fr-FR"),
+          },
+          {
+            key: "actual",
+            label: "Réalisé",
+            render: (r) => (
+              <span className="font-semibold text-slate-900">
+                {r.actual.toLocaleString("fr-FR")}
+              </span>
+            ),
+          },
+          {
+            key: "variance",
+            label: "Écart",
+            render: (r) => (
+              <Badge tone={r.variance >= 0 ? "green" : "red"}>
+                {r.variance >= 0 ? "+" : ""}
+                {r.variance.toLocaleString("fr-FR")}
+              </Badge>
+            ),
+          },
+          {
+            key: "rate",
+            label: "Taux",
+            render: (r) => (r.target_value ? `${(100 + r.variancePct).toFixed(0)}%` : "—"),
+          },
+        ]}
+      />
     </div>
   );
 }

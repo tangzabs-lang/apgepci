@@ -2,25 +2,16 @@
 
 import Link from "next/link";
 import { useActionState } from "react";
-import { AlertCircle, ArrowRight, BarChart3, Layers, Loader2, Mail, ShieldCheck } from "lucide-react";
+import { AlertCircle, ArrowRight, Loader2, Mail } from "lucide-react";
 import { login } from "@/lib/actions/auth";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { PasswordField, TextField } from "@/components/auth/fields";
-
-const PANEL_POINTS = [
-  { icon: Layers, label: "Toute votre organisation centralisée en un seul espace" },
-  { icon: BarChart3, label: "Prévisions, réalisations et écarts en un coup d'œil" },
-  { icon: ShieldCheck, label: "Données séparées par entreprise et journal d'audit complet" },
-];
 
 export default function LoginPage() {
   const [state, action, pending] = useActionState(login, undefined);
 
   return (
     <AuthShell
-      panelEyebrow="Espace entreprise"
-      panelTitle="Toute votre entreprise, structurée et pilotée en un seul endroit."
-      panelPoints={PANEL_POINTS}
       eyebrow="Connexion"
       title="Bon retour parmi nous"
       subtitle="Accédez à votre espace entreprise pour reprendre le pilotage de votre activité."

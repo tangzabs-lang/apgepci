@@ -82,7 +82,7 @@ export function RequestForm({
               <button
                 type="button"
                 onClick={() => setLines((prev) => prev.filter((_, idx) => idx !== i))}
-                className="text-sm text-red-600 hover:underline"
+                className="text-sm font-semibold text-red-600 hover:underline"
               >
                 Retirer
               </button>

@@ -35,14 +35,14 @@ export function RequestActions({
           <button
             disabled={pending}
             onClick={() => startTransition(() => decidePurchaseRequest(requestId, "approved"))}
-            className="rounded-md border border-green-300 px-3 py-1.5 text-sm font-medium text-green-700 hover:bg-green-50"
+            className="btn btn-success"
           >
             Approuver
           </button>
           <button
             disabled={pending}
             onClick={() => startTransition(() => decidePurchaseRequest(requestId, "rejected"))}
-            className="rounded-md border border-red-300 px-3 py-1.5 text-sm font-medium text-red-700 hover:bg-red-50"
+            className="btn btn-danger"
           >
             Rejeter
           </button>

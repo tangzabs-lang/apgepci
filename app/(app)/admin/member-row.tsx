@@ -20,9 +20,9 @@ export function MemberRow({
   const [pending, startTransition] = useTransition();
 
   return (
-    <tr>
-      <td className="px-4 py-2 text-sm">{fullName}</td>
-      <td className="px-4 py-2 text-sm">
+    <tr className="transition-colors hover:bg-blue-50/50">
+      <td className="px-4 py-3 text-sm font-semibold text-slate-800">{fullName}</td>
+      <td className="px-4 py-3 text-sm text-slate-700">
         <select
           defaultValue={roleId}
           disabled={pending}
@@ -36,15 +36,15 @@ export function MemberRow({
           ))}
         </select>
       </td>
-      <td className="px-4 py-2 text-sm">
+      <td className="px-4 py-3 text-sm text-slate-700">
         <Badge tone={status === "active" ? "green" : "red"}>{status}</Badge>
       </td>
-      <td className="px-4 py-2 text-right">
+      <td className="px-4 py-3 text-right">
         {status === "active" ? (
           <button
             disabled={pending}
             onClick={() => startTransition(() => deactivateMember(membershipId))}
-            className="text-sm text-red-600 hover:underline"
+            className="text-sm font-semibold text-red-600 hover:underline"
           >
             Suspendre
           </button>
@@ -52,7 +52,7 @@ export function MemberRow({
           <button
             disabled={pending}
             onClick={() => startTransition(() => reactivateMember(membershipId))}
-            className="text-sm text-green-600 hover:underline"
+            className="text-sm font-semibold text-emerald-600 hover:underline"
           >
             Réactiver
           </button>

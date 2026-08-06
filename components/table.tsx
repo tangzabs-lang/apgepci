@@ -23,10 +23,59 @@ export function DataTable<T extends { id: string }>({
     );
   }
 
+  const [first, ...rest] = columns;
+  const cell = (c: (typeof columns)[number], row: T) =>
+    c.render ? c.render(row) : String((row as Record<string, unknown>)[c.key] ?? "—");
+
   return (
-    <div className="card overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="min-w-full">
+    <>
+      {/* Mobile : une carte par enregistrement, plus lisible qu'un tableau à faire défiler. */}
+      <ul className="flex flex-col gap-3 md:hidden">
+        {rows.map((row) => {
+          const body = (
+            <>
+              <div className="flex items-start justify-between gap-3">
+                <span className="min-w-0 text-base font-bold text-slate-900">
+                  {cell(first, row)}
+                </span>
+                {editHref && (
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                    <Pencil className="h-4 w-4" />
+                  </span>
+                )}
+              </div>
+              <dl className="mt-3 flex flex-col gap-2">
+                {rest.map((c) => (
+                  <div key={c.key} className="flex items-start justify-between gap-3">
+                    <dt className="shrink-0 text-xs font-semibold uppercase tracking-wide text-slate-400">
+                      {c.label}
+                    </dt>
+                    <dd className="min-w-0 text-right text-sm font-medium text-slate-700">
+                      {cell(c, row)}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </>
+          );
+
+          return (
+            <li key={row.id} className="card p-4">
+              {editHref ? (
+                <Link href={editHref(row)} className="block">
+                  {body}
+                </Link>
+              ) : (
+                body
+              )}
+            </li>
+          );
+        })}
+      </ul>
+
+      <div className="card hidden overflow-hidden md:block">
+        <div className="overflow-x-auto">
+          <table className="min-w-full">
           <thead>
             <tr className="border-b border-slate-200 bg-linear-to-r from-blue-50 to-white">
               {columns.map((c) => (
@@ -61,10 +110,11 @@ export function DataTable<T extends { id: string }>({
                 )}
               </tr>
             ))}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -78,15 +128,22 @@ export function PageHeader({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div className="mb-5 flex flex-col gap-4 sm:mb-6 sm:flex-row sm:items-end sm:justify-between">
       <div className="min-w-0">
-        <span className="mb-2 block h-1 w-12 rounded-full bg-linear-to-r from-blue-600 to-blue-300" />
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">{title}</h1>
+        <span className="mb-2 block h-1 w-10 rounded-full bg-linear-to-r from-blue-600 to-blue-300 sm:w-12" />
+        <h1 className="text-xl font-bold leading-tight tracking-tight text-slate-900 sm:text-3xl">
+          {title}
+        </h1>
         {description && (
           <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-slate-500">{description}</p>
         )}
       </div>
-      {action && <div className="flex flex-wrap items-center gap-2">{action}</div>}
+      {/* Sur mobile les actions passent en pleine largeur, côte à côte dès sm. */}
+      {action && (
+        <div className="flex flex-col gap-2 *:w-full [&_.btn]:w-full sm:flex-row sm:flex-wrap sm:items-center sm:*:w-auto sm:[&_.btn]:w-auto">
+          {action}
+        </div>
+      )}
     </div>
   );
 }

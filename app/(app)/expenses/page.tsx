@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getActiveCompany } from "@/lib/active-company";
-import { PageHeader, Badge } from "@/components/table";
+import { DataTable, PageHeader, Badge } from "@/components/table";
 import { DecisionButtons } from "./decision-buttons";
 
 const STATUS_TONE: Record<string, "default" | "green" | "red" | "yellow"> = {
@@ -40,49 +40,43 @@ export default async function ExpensesPage() {
         }
       />
 
-      <div className="card overflow-x-auto">
-        <table className="min-w-full divide-y divide-slate-100">
-          <thead className="bg-linear-to-r from-blue-50 to-white">
-            <tr className="border-b border-slate-200 text-left text-[0.7rem] font-bold uppercase tracking-widest text-blue-900/70">
-              <th className="whitespace-nowrap px-4 py-3">Référence</th>
-              <th className="whitespace-nowrap px-4 py-3">Date</th>
-              <th className="whitespace-nowrap px-4 py-3">Catégorie</th>
-              <th className="whitespace-nowrap px-4 py-3">Bénéficiaire</th>
-              <th className="whitespace-nowrap px-4 py-3">Montant</th>
-              <th className="whitespace-nowrap px-4 py-3">Statut</th>
-              <th className="whitespace-nowrap px-4 py-3" />
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100 bg-white">
-            {(expenses ?? []).map((e) => (
-              <tr className="transition-colors hover:bg-blue-50/50" key={e.id}>
-                <td className="px-4 py-3 text-sm text-slate-700">
-                  <Link href={`/expenses/${e.id}`} className="font-semibold text-blue-600 hover:underline">
-                    {e.reference}
-                  </Link>
-                </td>
-                <td className="px-4 py-3 text-sm text-slate-700">{e.expense_date}</td>
-                <td className="px-4 py-3 text-sm text-slate-700">{e.category?.name ?? "—"}</td>
-                <td className="px-4 py-3 text-sm text-slate-700">{e.beneficiary ?? "—"}</td>
-                <td className="px-4 py-3 text-sm text-slate-700">{Number(e.amount).toLocaleString("fr-FR")}</td>
-                <td className="px-4 py-3 text-sm text-slate-700">
-                  <Badge tone={STATUS_TONE[e.status] ?? "default"}>{e.status}</Badge>
-                </td>
-                <td className="px-4 py-3 text-right">
-                  <DecisionButtons expenseId={e.id} status={e.status} />
-                </td>
-              </tr>
-            ))}
-            {(expenses ?? []).length === 0 && (
-              <tr>
-                <td colSpan={7} className="px-4 py-12 text-center text-sm text-slate-500">
-                  Aucune dépense enregistrée.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+      <DataTable
+        rows={expenses ?? []}
+        emptyMessage="Aucune dépense enregistrée."
+        columns={[
+          {
+            key: "reference",
+            label: "Référence",
+            render: (e) => (
+              <Link href={`/expenses/${e.id}`} className="font-semibold text-blue-600 hover:underline">
+                {e.reference}
+              </Link>
+            ),
+          },
+          { key: "expense_date", label: "Date" },
+          { key: "category", label: "Catégorie", render: (e) => e.category?.name ?? "—" },
+          { key: "beneficiary", label: "Bénéficiaire", render: (e) => e.beneficiary ?? "—" },
+          {
+            key: "amount",
+            label: "Montant",
+            render: (e) => (
+              <span className="font-semibold text-slate-900">
+                {Number(e.amount).toLocaleString("fr-FR")}
+              </span>
+            ),
+          },
+          {
+            key: "status",
+            label: "Statut",
+            render: (e) => <Badge tone={STATUS_TONE[e.status] ?? "default"}>{e.status}</Badge>,
+          },
+          {
+            key: "actions",
+            label: "Décision",
+            render: (e) => <DecisionButtons expenseId={e.id} status={e.status} />,
+          },
+        ]}
+      />
     </div>
   );
 }

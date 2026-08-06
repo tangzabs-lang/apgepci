@@ -12,14 +12,14 @@ export function DecisionButtons({ expenseId, status }: { expenseId: string; stat
       <button
         disabled={pending}
         onClick={() => startTransition(() => decideExpense(expenseId, "approved"))}
-        className="rounded-md border border-green-300 px-2 py-1 text-xs font-medium text-green-700 hover:bg-green-50 disabled:opacity-60"
+        className="btn btn-success px-2.5 py-1 text-xs"
       >
         Approuver
       </button>
       <button
         disabled={pending}
         onClick={() => startTransition(() => decideExpense(expenseId, "rejected"))}
-        className="rounded-md border border-red-300 px-2 py-1 text-xs font-medium text-red-700 hover:bg-red-50 disabled:opacity-60"
+        className="btn btn-danger px-2.5 py-1 text-xs"
       >
         Rejeter
       </button>

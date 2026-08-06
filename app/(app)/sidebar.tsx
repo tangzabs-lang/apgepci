@@ -47,6 +47,17 @@ const ICONS: Record<string, LucideIcon> = {
   admin: Settings2,
 };
 
+/** Libellés courts pour la barre d'onglets mobile. */
+const SHORT_LABELS: Record<string, string> = {
+  dashboards: "Bord",
+  sales: "Ventes",
+  clients: "Clients",
+  expenses: "Dépenses",
+  stock: "Stock",
+  purchasing: "Achats",
+  crm: "CRM",
+};
+
 const GROUPS: { title: string; keys: string[] }[] = [
   { title: "Pilotage", keys: ["dashboards", "forecasts", "reports"] },
   { title: "Activité", keys: ["clients", "catalog", "sales", "crm", "projects"] },
@@ -174,15 +185,49 @@ export function Sidebar({ permissions }: { permissions: string[] }) {
   );
 }
 
-export function MobileNav({ permissions }: { permissions: string[] }) {
-  const [open, setOpen] = useState(false);
-
+function Drawer({
+  permissions,
+  onClose,
+}: {
+  permissions: string[];
+  onClose: () => void;
+}) {
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [open]);
+  }, []);
+
+  return (
+    <div className="fixed inset-0 z-[60] lg:hidden">
+      <button
+        type="button"
+        aria-label="Fermer le menu"
+        onClick={onClose}
+        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+      />
+      <div className="absolute inset-y-0 left-0 flex w-[85%] max-w-xs flex-col bg-white py-5 shadow-2xl">
+        <div className="flex items-center justify-between pb-6 pr-3">
+          <Brand />
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Fermer le menu"
+            className="flex h-11 w-11 items-center justify-center rounded-xl text-slate-500 hover:bg-slate-100"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+        <NavList permissions={permissions} onNavigate={onClose} />
+      </div>
+    </div>
+  );
+}
+
+/** Bouton hamburger de la barre supérieure (mobile et tablette). */
+export function MobileNav({ permissions }: { permissions: string[] }) {
+  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -190,35 +235,61 @@ export function MobileNav({ permissions }: { permissions: string[] }) {
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Ouvrir le menu"
-        className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-colors hover:border-blue-200 hover:text-blue-600 lg:hidden"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-colors hover:border-blue-200 hover:text-blue-600 lg:hidden"
       >
         <Menu className="h-5 w-5" />
       </button>
 
-      {open && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          <button
-            type="button"
-            aria-label="Fermer le menu"
-            onClick={() => setOpen(false)}
-            className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
-          />
-          <div className="absolute inset-y-0 left-0 flex w-72 max-w-[85%] flex-col bg-white py-5 shadow-2xl">
-            <div className="flex items-center justify-between pb-6 pr-3">
-              <Brand />
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                aria-label="Fermer le menu"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-            <NavList permissions={permissions} onNavigate={() => setOpen(false)} />
-          </div>
-        </div>
-      )}
+      {open && <Drawer permissions={permissions} onClose={() => setOpen(false)} />}
+    </>
+  );
+}
+
+/** Barre d'onglets basse : accès en un pouce aux modules les plus utilisés. */
+export function MobileTabBar({ permissions }: { permissions: string[] }) {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const items = useVisibleItems(permissions);
+
+  // Quatre raccourcis prioritaires parmi ceux autorisés, puis le menu complet.
+  const preferred = ["dashboards", "sales", "clients", "expenses", "stock", "purchasing", "crm"];
+  const byKey = new Map(items.map((i) => [i.key, i]));
+  const tabs = preferred
+    .map((k) => byKey.get(k))
+    .filter(Boolean)
+    .slice(0, 4) as typeof items;
+
+  return (
+    <>
+      <nav className="tabbar" aria-label="Navigation principale">
+        {tabs.map((item) => {
+          const Icon = ICONS[item.key] ?? Sparkles;
+          const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+          return (
+            <Link
+              key={item.key}
+              href={item.href}
+              data-active={isActive}
+              aria-current={isActive ? "page" : undefined}
+              className="tabbar-item"
+            >
+              <Icon className="h-5 w-5 shrink-0" />
+              <span>{SHORT_LABELS[item.key] ?? item.label}</span>
+            </Link>
+          );
+        })}
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="tabbar-item"
+          aria-label="Tous les modules"
+        >
+          <Menu className="h-5 w-5 shrink-0" />
+          <span>Menu</span>
+        </button>
+      </nav>
+
+      {open && <Drawer permissions={permissions} onClose={() => setOpen(false)} />}
     </>
   );
 }

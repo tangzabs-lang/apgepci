@@ -204,6 +204,15 @@ body {
     color: var(--brand-700);
   }
 
+  .btn-success {
+    color: #047857;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+  }
+  .btn-success:hover:not(:disabled) {
+    background: #d1fae5;
+  }
+
   .btn-danger {
     color: #b91c1c;
     background: #fef2f2;
@@ -275,6 +284,105 @@ body {
   .divide-soft > * + * {
     border-top: 1px solid var(--border-soft);
   }
+
+  /* ---------- Mobile first ---------- */
+
+  /* Barre d'onglets basse, masquée dès l'affichage du rail latéral (lg). */
+  .tabbar {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 40;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+    gap: 0.25rem;
+    border-top: 1px solid var(--brand-100);
+    background: rgb(255 255 255 / 0.94);
+    backdrop-filter: blur(12px);
+    padding: 0.35rem 0.4rem calc(0.35rem + env(safe-area-inset-bottom));
+    box-shadow: 0 -8px 24px -18px rgb(30 64 175 / 0.6);
+  }
+  @media (min-width: 1024px) {
+    .tabbar {
+      display: none;
+    }
+  }
+
+  .tabbar-item {
+    display: flex;
+    flex: 1 1 0;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    border-radius: 0.75rem;
+    padding: 0.4rem 0.15rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: #64748b;
+    line-height: 1.1;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tabbar-item[data-active="true"] {
+    color: var(--brand-700);
+    background: var(--brand-50);
+  }
+  .tabbar-item > span:last-child {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Déborde une carte/tableau sur toute la largeur de l'écran en mobile. */
+  .bleed-mobile {
+    margin-left: -1rem;
+    margin-right: -1rem;
+  }
+  @media (min-width: 640px) {
+    .bleed-mobile {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  /* Barre d'actions collée en bas de l'écran sur mobile (formulaires). */
+  .form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .form-actions > * {
+    flex: 1 1 100%;
+  }
+  @media (min-width: 640px) {
+    .form-actions > * {
+      flex: 0 0 auto;
+    }
+  }
+}
+
+/* Cibles tactiles confortables et texte de saisie sans zoom iOS. */
+@media (max-width: 639px) {
+  .btn {
+    min-height: 2.75rem;
+    padding-inline: 0.9rem;
+  }
+  .field-input {
+    min-height: 2.75rem;
+    font-size: 1rem; /* < 16px déclenche un zoom automatique sur iOS */
+  }
+  select.field-input,
+  textarea.field-input {
+    font-size: 1rem;
+  }
+}
+
+button,
+[role="button"],
+a {
+  -webkit-tap-highlight-color: rgb(37 99 235 / 0.12);
 }
 
 @keyframes rise-in {

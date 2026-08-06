@@ -9,7 +9,7 @@ export function ReceiveButton({ orderId }: { orderId: string }) {
     <button
       disabled={pending}
       onClick={() => startTransition(() => markOrderReceived(orderId))}
-      className="rounded-md border border-green-300 px-3 py-1.5 text-sm font-medium text-green-700 hover:bg-green-50 disabled:opacity-60"
+      className="btn btn-success disabled:opacity-60"
     >
       Marquer comme reçue
     </button>

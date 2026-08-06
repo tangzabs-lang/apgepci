@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { getCurrentUser, getUserCompanies } from "@/lib/data/companies";
 import { getActiveCompany } from "@/lib/active-company";
 import { getMyPermissions } from "@/lib/data/permissions";
-import { Sidebar } from "./sidebar";
+import { MobileTabBar, Sidebar } from "./sidebar";
 import { Topbar } from "./topbar";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
@@ -27,10 +27,12 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           userEmail={user.email ?? ""}
           permissions={perms}
         />
-        <main className="mx-auto w-full max-w-[1600px] flex-1 px-4 py-6 sm:px-6 sm:py-8">
+        {/* pb-24 : réserve la place de la barre d'onglets basse sur mobile. */}
+        <main className="mx-auto w-full max-w-[1600px] flex-1 px-4 pb-24 pt-5 sm:px-6 sm:pb-10 sm:pt-8 lg:pb-12">
           <div className="animate-rise">{children}</div>
         </main>
       </div>
+      <MobileTabBar permissions={perms} />
     </div>
   );
 }

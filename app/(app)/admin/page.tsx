@@ -25,7 +25,7 @@ export default async function AdminPage() {
       <InviteForm companyId={active.company_id} roles={(roles ?? []).map((r) => ({ key: r.key, name: r.name }))} />
 
       <SectionTitle className="mt-10">Membres de l&apos;entreprise</SectionTitle>
-      <div className="card overflow-x-auto">
+      <div className="card bleed-mobile overflow-x-auto rounded-none sm:rounded-2xl">
         <table className="min-w-full divide-y divide-slate-100">
           <thead className="bg-linear-to-r from-blue-50 to-white">
             <tr className="border-b border-slate-200 text-left text-[0.7rem] font-bold uppercase tracking-widest text-blue-900/70">

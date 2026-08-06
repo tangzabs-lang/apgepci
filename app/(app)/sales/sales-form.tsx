@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useMemo, useState } from "react";
+import { Plus, Trash2 } from "lucide-react";
 import { upsertSale } from "@/lib/actions/sales";
 import type { ActionState } from "@/lib/actions/org";
 import { TextField, SelectField, TextAreaField, SubmitButton, FormError } from "@/components/form";
@@ -71,7 +72,7 @@ export function SalesForm({
       {defaultValues?.id && <input type="hidden" name="id" value={defaultValues.id} />}
       <input type="hidden" name="lines_json" value={JSON.stringify(lines.filter((l) => l.product_id))} />
 
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <TextField
           label="Date"
           name="sale_date"
@@ -101,102 +102,105 @@ export function SalesForm({
 
       <div>
         <label className="field-label">Articles</label>
-        <div className="mt-2 overflow-x-auto card overflow-hidden">
-          <table className="min-w-full divide-y divide-slate-100">
-            <thead className="bg-linear-to-r from-blue-50 to-white">
-              <tr className="border-b border-slate-200 text-left text-[0.7rem] font-bold uppercase tracking-widest text-blue-900/70">
-                <th className="px-3 py-2">Article</th>
-                <th className="px-3 py-2">Quantité</th>
-                <th className="px-3 py-2">Prix unitaire</th>
-                <th className="px-3 py-2">Remise</th>
-                <th className="px-3 py-2">Taxe %</th>
-                <th className="px-3 py-2" />
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {lines.map((line, i) => (
-                <tr className="transition-colors hover:bg-blue-50/50" key={i}>
-                  <td className="p-2">
-                    <select
-                      value={line.product_id}
-                      onChange={(e) => onProductChange(i, e.target.value)}
-                      className="w-48 field-input"
-                    >
-                      <option value="">Sélectionner...</option>
-                      {products.map((p) => (
-                        <option key={p.id} value={p.id}>
-                          {p.name}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
-                  <td className="p-2">
-                    <input
-                      type="number"
-                      min={0}
-                      step="0.01"
-                      value={line.quantity}
-                      onChange={(e) => updateLine(i, { quantity: Number(e.target.value) })}
-                      className="w-24 field-input"
-                    />
-                  </td>
-                  <td className="p-2">
-                    <input
-                      type="number"
-                      min={0}
-                      step="0.01"
-                      value={line.unit_price}
-                      onChange={(e) => updateLine(i, { unit_price: Number(e.target.value) })}
-                      className="w-28 field-input"
-                    />
-                  </td>
-                  <td className="p-2">
-                    <input
-                      type="number"
-                      min={0}
-                      step="0.01"
-                      value={line.discount}
-                      onChange={(e) => updateLine(i, { discount: Number(e.target.value) })}
-                      className="w-24 field-input"
-                    />
-                  </td>
-                  <td className="p-2">
-                    <input
-                      type="number"
-                      min={0}
-                      step="0.01"
-                      value={line.tax_rate}
-                      onChange={(e) => updateLine(i, { tax_rate: Number(e.target.value) })}
-                      className="w-20 field-input"
-                    />
-                  </td>
-                  <td className="p-2">
-                    <button
-                      type="button"
-                      onClick={() => setLines((prev) => prev.filter((_, idx) => idx !== i))}
-                      className="text-sm text-red-600 hover:underline"
-                    >
-                      Retirer
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        {/* Une carte par ligne : saisissable au pouce, sans défilement horizontal. */}
+        <ul className="mt-2 flex flex-col gap-3">
+          {lines.map((line, i) => (
+            <li key={i} className="rounded-2xl border border-slate-200 bg-slate-50/60 p-3 sm:p-4">
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-xs font-bold uppercase tracking-wide text-slate-400">
+                  Ligne {i + 1}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setLines((prev) => prev.filter((_, idx) => idx !== i))}
+                  aria-label={`Retirer la ligne ${i + 1}`}
+                  className="flex h-9 w-9 items-center justify-center rounded-xl text-red-600 transition-colors hover:bg-red-50"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              </div>
+
+              <select
+                value={line.product_id}
+                onChange={(e) => onProductChange(i, e.target.value)}
+                aria-label="Article"
+                className="field-input mt-2"
+              >
+                <option value="">Sélectionner un article...</option>
+                {products.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}
+                  </option>
+                ))}
+              </select>
+
+              <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                <label className="min-w-0">
+                  <span className="field-label">Quantité</span>
+                  <input
+                    type="number"
+                    inputMode="decimal"
+                    min={0}
+                    step="0.01"
+                    value={line.quantity}
+                    onChange={(e) => updateLine(i, { quantity: Number(e.target.value) })}
+                    className="field-input mt-1"
+                  />
+                </label>
+                <label className="min-w-0">
+                  <span className="field-label">Prix unitaire</span>
+                  <input
+                    type="number"
+                    inputMode="decimal"
+                    min={0}
+                    step="0.01"
+                    value={line.unit_price}
+                    onChange={(e) => updateLine(i, { unit_price: Number(e.target.value) })}
+                    className="field-input mt-1"
+                  />
+                </label>
+                <label className="min-w-0">
+                  <span className="field-label">Remise</span>
+                  <input
+                    type="number"
+                    inputMode="decimal"
+                    min={0}
+                    step="0.01"
+                    value={line.discount}
+                    onChange={(e) => updateLine(i, { discount: Number(e.target.value) })}
+                    className="field-input mt-1"
+                  />
+                </label>
+                <label className="min-w-0">
+                  <span className="field-label">Taxe %</span>
+                  <input
+                    type="number"
+                    inputMode="decimal"
+                    min={0}
+                    step="0.01"
+                    value={line.tax_rate}
+                    onChange={(e) => updateLine(i, { tax_rate: Number(e.target.value) })}
+                    className="field-input mt-1"
+                  />
+                </label>
+              </div>
+            </li>
+          ))}
+        </ul>
         <button
           type="button"
           onClick={() =>
             setLines((prev) => [...prev, { product_id: "", quantity: 1, unit_price: 0, discount: 0, tax_rate: 0 }])
           }
-          className="mt-2 text-sm font-semibold text-blue-600 hover:text-blue-700 hover:underline"
+          className="btn btn-secondary mt-3 w-full sm:w-auto"
         >
-          + Ajouter un article
+          <Plus className="h-4 w-4" />
+          Ajouter un article
         </button>
       </div>
 
       <div className="flex justify-end">
-        <dl className="w-64 space-y-1 text-sm">
+        <dl className="w-full space-y-1.5 rounded-2xl bg-blue-50/60 p-4 text-sm sm:w-64">
           <div className="flex justify-between">
             <dt className="text-slate-500">Sous-total</dt>
             <dd>{totals.subtotal.toLocaleString("fr-FR")}</dd>
@@ -209,9 +213,11 @@ export function SalesForm({
             <dt className="text-slate-500">Taxes</dt>
             <dd>{totals.tax.toLocaleString("fr-FR")}</dd>
           </div>
-          <div className="flex justify-between border-t border-slate-200 pt-1 font-semibold">
-            <dt>Total</dt>
-            <dd>{totals.total.toLocaleString("fr-FR")}</dd>
+          <div className="flex items-center justify-between border-t border-blue-200 pt-2">
+            <dt className="font-bold uppercase tracking-wide text-slate-600">Total</dt>
+            <dd className="text-lg font-bold text-blue-700">
+              {totals.total.toLocaleString("fr-FR")}
+            </dd>
           </div>
         </dl>
       </div>
@@ -219,7 +225,9 @@ export function SalesForm({
       <TextAreaField label="Observations" name="notes" defaultValue={defaultValues?.notes ?? undefined} />
 
       <FormError message={state?.error} />
-      <SubmitButton>Enregistrer la vente</SubmitButton>
+      <div className="form-actions">
+        <SubmitButton>Enregistrer la vente</SubmitButton>
+      </div>
     </form>
   );
 }

@@ -176,7 +176,7 @@ export default async function DashboardPage() {
   return (
     <div className="flex flex-col gap-6">
       {/* Bandeau d'accueil */}
-      <section className="panel-gradient relative overflow-hidden rounded-3xl px-6 py-8 text-white shadow-[0_24px_60px_-30px_rgba(30,64,175,0.9)] sm:px-8 sm:py-10">
+      <section className="panel-gradient relative overflow-hidden rounded-2xl px-4 py-6 text-white shadow-[0_24px_60px_-30px_rgba(30,64,175,0.9)] sm:rounded-3xl sm:px-8 sm:py-10">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0"
@@ -190,10 +190,10 @@ export default async function DashboardPage() {
             <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold capitalize text-blue-50 ring-1 ring-inset ring-white/20">
               {today}
             </span>
-            <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
+            <h1 className="mt-3 text-2xl font-bold tracking-tight sm:mt-4 sm:text-4xl">
               Tableau de bord
             </h1>
-            <p className="mt-2 max-w-xl text-sm leading-relaxed text-blue-50/90">
+            <p className="mt-2 max-w-xl text-[0.9rem] leading-relaxed text-blue-50/90">
               Vue d&apos;ensemble de{" "}
               <span className="font-semibold text-white">
                 {active.company?.trade_name || active.company?.name}
@@ -202,17 +202,17 @@ export default async function DashboardPage() {
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
-            <div className="rounded-2xl bg-white/12 px-4 py-3 ring-1 ring-inset ring-white/20 backdrop-blur">
+          <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap">
+            <div className="rounded-2xl bg-white/12 px-3 py-3 ring-1 ring-inset ring-white/20 backdrop-blur sm:px-4">
               <p className="text-xs font-medium text-blue-50/80">Alertes ouvertes</p>
-              <p className="mt-1 flex items-center gap-2 text-2xl font-bold">
+              <p className="mt-1 flex items-center gap-2 text-xl font-bold sm:text-2xl">
                 <AlertTriangle className="h-5 w-5 text-amber-200" />
                 {nf.format(alertsCount ?? 0)}
               </p>
             </div>
-            <div className="rounded-2xl bg-white/12 px-4 py-3 ring-1 ring-inset ring-white/20 backdrop-blur">
+            <div className="rounded-2xl bg-white/12 px-3 py-3 ring-1 ring-inset ring-white/20 backdrop-blur sm:px-4">
               <p className="text-xs font-medium text-blue-50/80">Validations en attente</p>
-              <p className="mt-1 flex items-center gap-2 text-2xl font-bold">
+              <p className="mt-1 flex items-center gap-2 text-xl font-bold sm:text-2xl">
                 <CheckCircle2 className="h-5 w-5 text-blue-100" />
                 {nf.format(pendingApprovalsCount ?? 0)}
               </p>
@@ -222,31 +222,32 @@ export default async function DashboardPage() {
       </section>
 
       {/* Indicateurs clés */}
-      <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <section className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
         {stats.map((s) => {
           const up = (s.variation ?? 0) >= 0;
           const good = up === s.positiveIsGood;
           return (
-            <Link key={s.label} href={s.href} className="stat-card card-hover group p-5">
+            <Link key={s.label} href={s.href} className="stat-card card-hover group p-4 sm:p-5">
               <div className="flex items-start justify-between">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600 transition-colors group-hover:bg-blue-600 group-hover:text-white">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600 transition-colors group-hover:bg-blue-600 group-hover:text-white sm:h-11 sm:w-11">
                   <s.icon className="h-5 w-5" />
                 </span>
                 <ArrowUpRight className="h-4 w-4 text-slate-300 transition-colors group-hover:text-blue-600" />
               </div>
-              <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-400">
+              <p className="mt-3 text-[0.68rem] font-semibold uppercase tracking-wide text-slate-400 sm:mt-4 sm:text-xs">
                 {s.label}
               </p>
-              <p className="mt-1 text-3xl font-bold tracking-tight text-slate-900">{s.value}</p>
+              <p className="mt-1 text-xl font-bold tracking-tight text-slate-900 sm:text-3xl">{s.value}</p>
               {s.variation !== null && (
                 <p
-                  className={`mt-2 inline-flex items-center gap-1 text-xs font-semibold ${
+                  className={`mt-2 inline-flex items-center gap-1 text-[0.68rem] font-semibold sm:text-xs ${
                     good ? "text-emerald-600" : "text-red-500"
                   }`}
                 >
                   {up ? <TrendingUp className="h-3.5 w-3.5" /> : <TrendingDown className="h-3.5 w-3.5" />}
                   {up ? "+" : ""}
-                  {s.variation.toFixed(1)} % vs mois précédent
+                  {s.variation.toFixed(1)} %
+                  <span className="hidden sm:inline">vs mois précédent</span>
                 </p>
               )}
             </Link>
@@ -255,8 +256,8 @@ export default async function DashboardPage() {
       </section>
 
       {/* Graphiques */}
-      <section className="grid grid-cols-1 gap-4 xl:grid-cols-5">
-        <div className="card p-5 sm:p-6 xl:col-span-3">
+      <section className="grid grid-cols-1 gap-3 sm:gap-4 xl:grid-cols-5">
+        <div className="card p-4 sm:p-6 xl:col-span-3">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
               <h2 className="text-base font-bold text-slate-900">Tendance des ventes</h2>
@@ -270,7 +271,7 @@ export default async function DashboardPage() {
           <SalesTrendChart data={buckets.map(({ month, sales }) => ({ month, total: sales }))} />
         </div>
 
-        <div className="card p-5 sm:p-6 xl:col-span-2">
+        <div className="card p-4 sm:p-6 xl:col-span-2">
           <div className="mb-4">
             <h2 className="text-base font-bold text-slate-900">Ventes vs dépenses</h2>
             <p className="text-sm text-slate-500">Comparatif mensuel.</p>
@@ -282,7 +283,7 @@ export default async function DashboardPage() {
       </section>
 
       {/* Dernières ventes + actions rapides */}
-      <section className="grid grid-cols-1 gap-4 xl:grid-cols-5">
+      <section className="grid grid-cols-1 gap-3 sm:gap-4 xl:grid-cols-5">
         <div className="card overflow-hidden xl:col-span-3">
           <div className="flex items-center justify-between gap-3 border-b border-slate-100 bg-linear-to-r from-blue-50 to-white px-5 py-4">
             <h2 className="text-base font-bold text-slate-900">Dernières ventes</h2>
@@ -326,7 +327,7 @@ export default async function DashboardPage() {
           )}
         </div>
 
-        <div className="card p-5 sm:p-6 xl:col-span-2">
+        <div className="card p-4 sm:p-6 xl:col-span-2">
           <h2 className="text-base font-bold text-slate-900">Actions rapides</h2>
           <p className="text-sm text-slate-500">Les saisies les plus fréquentes.</p>
           <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-1">

@@ -25,7 +25,7 @@ export function Topbar({
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/85 backdrop-blur-md">
-      <div className="flex h-16 items-center justify-between gap-3 px-4 sm:px-6">
+      <div className="flex h-14 items-center justify-between gap-2 px-3 sm:h-16 sm:gap-3 sm:px-6">
         <div className="flex min-w-0 items-center gap-3">
           <MobileNav permissions={permissions} />
 

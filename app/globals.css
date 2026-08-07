@@ -285,6 +285,23 @@ body {
     border-top: 1px solid var(--border-soft);
   }
 
+  /* Bouton flottant d'assistance, sous le tiroir de navigation (z-60). */
+  .fab {
+    position: fixed;
+    right: 1.25rem;
+    bottom: calc(1.25rem + env(safe-area-inset-bottom));
+    z-index: 50;
+  }
+  /* Dégagé de la barre d'onglets basse là où elle est affichée. */
+  body:has(.tabbar) .fab {
+    bottom: calc(4.75rem + env(safe-area-inset-bottom));
+  }
+  @media (min-width: 1024px) {
+    body:has(.tabbar) .fab {
+      bottom: 1.5rem;
+    }
+  }
+
   /* ---------- Mobile first ---------- */
 
   /* Barre d'onglets basse, masquée dès l'affichage du rail latéral (lg). */

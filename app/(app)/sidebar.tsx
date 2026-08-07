@@ -189,7 +189,7 @@ export function Sidebar({
   return (
     <aside
       className={`fixed inset-y-0 left-0 z-30 hidden flex-col border-r border-slate-200 bg-white py-5 transition-[width] duration-200 lg:flex ${
-        collapsed ? "w-18" : "w-60"
+        collapsed ? "w-18" : "w-56"
       }`}
     >
       <div

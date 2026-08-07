@@ -21,7 +21,7 @@ export function AppShell({
       <Sidebar permissions={permissions} collapsed={collapsed} onToggle={toggle} />
       <div
         className={`flex min-w-0 flex-1 flex-col transition-[padding] duration-200 ${
-          collapsed ? "lg:pl-18" : "lg:pl-60"
+          collapsed ? "lg:pl-18" : "lg:pl-56"
         }`}
       >
         {children}

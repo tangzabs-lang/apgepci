@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import type { ActionState } from "@/lib/actions/org";
+import { humanizeError } from "@/lib/errors";
 
 const supplierSchema = z.object({
   company_id: z.string().uuid(),
@@ -42,7 +43,7 @@ export async function upsertSupplier(_prev: ActionState, formData: FormData): Pr
     ? await supabase.from("suppliers").update(payload).eq("id", id)
     : await supabase.from("suppliers").insert(payload);
 
-  if (error) return { error: error.message };
+  if (error) return { error: humanizeError(error) };
 
   revalidatePath("/purchasing/suppliers");
   redirect("/purchasing/suppliers");

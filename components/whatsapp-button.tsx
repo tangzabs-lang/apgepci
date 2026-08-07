@@ -11,7 +11,7 @@ export function WhatsAppButton() {
       rel="noopener noreferrer"
       aria-label={LABEL}
       title={LABEL}
-      className="fab flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_12px_28px_-8px_rgba(37,211,102,0.7)] transition-transform hover:scale-105 active:scale-95"
+      className="fab fab-pulse flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_12px_28px_-8px_rgba(37,211,102,0.7)] transition-transform hover:scale-105 active:scale-95"
     >
       {/* Glyphe officiel WhatsApp. */}
       <svg

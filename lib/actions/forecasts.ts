@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import type { ActionState } from "@/lib/actions/org";
+import { humanizeError } from "@/lib/errors";
 
 const forecastSchema = z.object({
   company_id: z.string().uuid(),
@@ -31,7 +32,7 @@ export async function createForecast(_prev: ActionState, formData: FormData): Pr
 
   const supabase = await createClient();
   const { error } = await supabase.from("forecasts").insert({ ...parsed.data, scope_type: "company" });
-  if (error) return { error: error.message };
+  if (error) return { error: humanizeError(error) };
 
   revalidatePath("/forecasts");
   redirect("/forecasts");

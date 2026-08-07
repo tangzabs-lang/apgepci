@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import type { ActionState } from "@/lib/actions/org";
+import { humanizeError } from "@/lib/errors";
 
 const productSchema = z.object({
   company_id: z.string().uuid(),
@@ -101,7 +102,7 @@ export async function upsertProduct(_prev: ActionState, formData: FormData): Pro
     ? await supabase.from("products").update(payload).eq("id", id)
     : await supabase.from("products").insert(payload);
 
-  if (error) return { error: error.message };
+  if (error) return { error: humanizeError(error) };
 
   revalidatePath("/catalog");
   redirect("/catalog");

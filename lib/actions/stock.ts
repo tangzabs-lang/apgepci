@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import type { ActionState } from "@/lib/actions/org";
+import { humanizeError } from "@/lib/errors";
 
 const warehouseSchema = z.object({
   company_id: z.string().uuid(),
@@ -31,7 +32,7 @@ export async function upsertWarehouse(_prev: ActionState, formData: FormData): P
     ? await supabase.from("warehouses").update(payload).eq("id", id)
     : await supabase.from("warehouses").insert(payload);
 
-  if (error) return { error: error.message };
+  if (error) return { error: humanizeError(error) };
   revalidatePath("/stock");
   redirect("/stock");
 }
@@ -72,7 +73,7 @@ export async function createStockMovement(_prev: ActionState, formData: FormData
     .from("stock_movements")
     .insert({ ...parsed.data, performed_by: user?.id });
 
-  if (error) return { error: error.message };
+  if (error) return { error: humanizeError(error) };
   revalidatePath("/stock");
   redirect("/stock");
 }

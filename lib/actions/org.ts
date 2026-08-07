@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
+import { humanizeError } from "@/lib/errors";
 
 const siteSchema = z.object({
   company_id: z.string().uuid(),
@@ -35,7 +36,7 @@ export async function upsertSite(_prev: ActionState, formData: FormData): Promis
     ? await supabase.from("sites").update(parsed.data).eq("id", id)
     : await supabase.from("sites").insert(parsed.data);
 
-  if (error) return { error: error.message };
+  if (error) return { error: humanizeError(error) };
 
   revalidatePath("/org");
   redirect("/org");
@@ -81,7 +82,7 @@ export async function upsertOrgUnit(_prev: ActionState, formData: FormData): Pro
     ? await supabase.from("org_units").update(payload).eq("id", id)
     : await supabase.from("org_units").insert(payload);
 
-  if (error) return { error: error.message };
+  if (error) return { error: humanizeError(error) };
 
   revalidatePath("/org");
   redirect("/org");

@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import type { ActionState } from "@/lib/actions/org";
+import { humanizeError } from "@/lib/errors";
 
 const lineSchema = z.object({
   product_id: z.string().uuid(),
@@ -25,7 +26,7 @@ export async function createPurchaseRequest(_prev: ActionState, formData: FormDa
   try {
     lines = JSON.parse(String(formData.get("lines_json") || "[]"));
   } catch {
-    return { error: "Lignes invalides." };
+    return { error: "Les lignes de la demande sont incomplètes. Vérifiez que chaque ligne a un article et une quantité." };
   }
 
   const parsed = requestSchema.safeParse({
@@ -50,7 +51,7 @@ export async function createPurchaseRequest(_prev: ActionState, formData: FormDa
     .insert({ ...rest, org_unit_id: org_unit_id || null, reference, requested_by: user?.id })
     .select("id")
     .single();
-  if (error || !request) return { error: error?.message ?? "Erreur." };
+  if (error || !request) return { error: humanizeError(error) };
 
   await supabase.from("purchase_request_lines").insert(
     requestLines.map((l) => ({
@@ -84,7 +85,7 @@ export async function convertRequestToOrder(requestId: string, supplierId: strin
     .select("id, company_id, reference")
     .eq("id", requestId)
     .single();
-  if (!request) return { error: "Demande introuvable." };
+  if (!request) return { error: "Cette demande d'achat est introuvable : elle a peut-être été supprimée." };
 
   const { data: lines } = await supabase
     .from("purchase_request_lines")
@@ -101,7 +102,7 @@ export async function convertRequestToOrder(requestId: string, supplierId: strin
     })
     .select("id")
     .single();
-  if (error || !order) return { error: error?.message ?? "Erreur." };
+  if (error || !order) return { error: humanizeError(error) };
 
   await supabase.from("purchase_order_lines").insert(
     (lines ?? []).map((l) => ({

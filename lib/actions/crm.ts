@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import type { ActionState } from "@/lib/actions/org";
+import { humanizeError } from "@/lib/errors";
 
 const prospectSchema = z.object({
   company_id: z.string().uuid(),
@@ -30,7 +31,7 @@ export async function createProspect(_prev: ActionState, formData: FormData): Pr
 
   const supabase = await createClient();
   const { error } = await supabase.from("prospects").insert(parsed.data);
-  if (error) return { error: error.message };
+  if (error) return { error: humanizeError(error) };
 
   revalidatePath("/crm");
   redirect("/crm");
@@ -60,7 +61,7 @@ export async function createOpportunity(_prev: ActionState, formData: FormData):
 
   const supabase = await createClient();
   const { error } = await supabase.from("opportunities").insert(parsed.data);
-  if (error) return { error: error.message };
+  if (error) return { error: humanizeError(error) };
 
   revalidatePath("/crm");
   redirect("/crm");
@@ -87,7 +88,7 @@ export async function createComplaint(_prev: ActionState, formData: FormData): P
   const supabase = await createClient();
   const { client_id, ...rest } = parsed.data;
   const { error } = await supabase.from("complaints").insert({ ...rest, client_id: client_id || null });
-  if (error) return { error: error.message };
+  if (error) return { error: humanizeError(error) };
 
   revalidatePath("/crm");
   redirect("/crm");

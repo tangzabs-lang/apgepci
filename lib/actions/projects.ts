@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import type { ActionState } from "@/lib/actions/org";
+import { humanizeError } from "@/lib/errors";
 
 const projectSchema = z.object({
   company_id: z.string().uuid(),
@@ -37,7 +38,7 @@ export async function createProject(_prev: ActionState, formData: FormData): Pro
     .insert({ ...rest, client_id: client_id || null, status: "active" })
     .select("id")
     .single();
-  if (error || !project) return { error: error?.message ?? "Erreur." };
+  if (error || !project) return { error: humanizeError(error) };
 
   revalidatePath("/projects");
   redirect(`/projects/${project.id}`);

@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import type { ActionState } from "@/lib/actions/org";
+import { humanizeError } from "@/lib/errors";
 
 const positionSchema = z.object({
   company_id: z.string().uuid(),
@@ -33,7 +34,7 @@ export async function upsertPosition(_prev: ActionState, formData: FormData): Pr
     ? await supabase.from("positions").update(payload).eq("id", id)
     : await supabase.from("positions").insert(payload);
 
-  if (error) return { error: error.message };
+  if (error) return { error: humanizeError(error) };
   revalidatePath("/hr");
   redirect("/hr");
 }
@@ -84,7 +85,7 @@ export async function upsertEmployee(_prev: ActionState, formData: FormData): Pr
     ? await supabase.from("employees").update(payload).eq("id", id)
     : await supabase.from("employees").insert(payload);
 
-  if (error) return { error: error.message };
+  if (error) return { error: humanizeError(error) };
   revalidatePath("/hr");
   redirect("/hr");
 }

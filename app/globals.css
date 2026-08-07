@@ -285,21 +285,21 @@ body {
     border-top: 1px solid var(--border-soft);
   }
 
-  /* Bouton flottant d'assistance, sous le tiroir de navigation (z-60). */
+  /* Bouton flottant d'assistance. */
   .fab {
     position: fixed;
     right: 1.25rem;
     bottom: calc(1.25rem + env(safe-area-inset-bottom));
     z-index: 50;
   }
-  /* Dégagé de la barre d'onglets basse là où elle est affichée. */
-  body:has(.tabbar) .fab {
-    bottom: calc(4.75rem + env(safe-area-inset-bottom));
-  }
-  @media (min-width: 1024px) {
-    body:has(.tabbar) .fab {
-      bottom: 1.5rem;
-    }
+
+  /* Halo qui bat lentement : discret, mais accroche l'œil au repos. */
+  .fab-pulse::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    animation: fab-pulse 2.8s ease-out infinite;
   }
 
   /* ---------- Mobile first ---------- */
@@ -417,8 +417,23 @@ a {
   animation: rise-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+@keyframes fab-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(37 211 102 / 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 16px rgb(37 211 102 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(37 211 102 / 0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-rise {
+    animation: none;
+  }
+  .fab-pulse::before {
     animation: none;
   }
   .card-hover:hover {

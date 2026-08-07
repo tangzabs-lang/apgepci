@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import type { ActionState } from "@/lib/actions/org";
+import { humanizeError } from "@/lib/errors";
 
 const inviteSchema = z.object({
   company_id: z.string().uuid(),
@@ -26,7 +27,7 @@ export async function inviteUser(_prev: ActionState, formData: FormData): Promis
     p_role_key: parsed.data.role_key,
   });
 
-  if (error) return { error: error.message };
+  if (error) return { error: humanizeError(error) };
 
   revalidatePath("/admin");
   return undefined;

@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
+import { humanizeError } from "@/lib/errors";
 
 const companySchema = z.object({
   name: z.string().min(2, "La raison sociale est requise."),
@@ -57,7 +58,7 @@ export async function createCompany(
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) {
-    return { error: "Vous devez être connecté." };
+    return { error: "Votre session a expiré. Reconnectez-vous pour continuer." };
   }
 
   const { primary_sector_id, secondary_sector_ids, ...companyFields } = parsed.data;
@@ -69,7 +70,7 @@ export async function createCompany(
     .single();
 
   if (error || !company) {
-    return { error: "Erreur lors de la création de l'entreprise : " + (error?.message ?? "") };
+    return { error: humanizeError(error, "La création de l'entreprise n'a pas abouti. Réessayez.") };
   }
 
   const sectorRows = [

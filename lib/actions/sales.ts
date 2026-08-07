@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import type { ActionState } from "@/lib/actions/org";
+import { humanizeError } from "@/lib/errors";
 
 const lineSchema = z.object({
   product_id: z.string().uuid(),
@@ -46,7 +47,7 @@ export async function upsertSale(_prev: ActionState, formData: FormData): Promis
   try {
     lines = JSON.parse(String(formData.get("lines_json") || "[]"));
   } catch {
-    return { error: "Lignes de vente invalides." };
+    return { error: "Les lignes de la vente sont incomplètes. Vérifiez que chaque ligne a un article, une quantité et un prix." };
   }
 
   const parsed = saleSchema.safeParse({
@@ -78,7 +79,7 @@ export async function upsertSale(_prev: ActionState, formData: FormData): Promis
   let saleId = id;
   if (id) {
     const { error } = await supabase.from("sales").update(payload).eq("id", id);
-    if (error) return { error: error.message };
+    if (error) return { error: humanizeError(error) };
     await supabase.from("sale_lines").delete().eq("sale_id", id);
   } else {
     const reference = `VTE-${Date.now()}`;
@@ -87,11 +88,11 @@ export async function upsertSale(_prev: ActionState, formData: FormData): Promis
       .insert({ ...payload, reference })
       .select("id")
       .single();
-    if (error || !created) return { error: error?.message ?? "Erreur lors de la création." };
+    if (error || !created) return { error: humanizeError(error) };
     saleId = created.id;
   }
 
-  if (!saleId) return { error: "Erreur lors de la création de la vente." };
+  if (!saleId) return { error: "L'enregistrement de la vente n'a pas abouti. Réessayez dans un instant." };
 
   const lineRows = saleLines.map((line) => {
     const gross = line.quantity * line.unit_price;
@@ -126,7 +127,7 @@ const STATUS_TRANSITIONS: Record<string, string[]> = {
 export async function updateSaleStatus(saleId: string, toStatus: string, reason?: string) {
   const supabase = await createClient();
   const { data: sale } = await supabase.from("sales").select("status, company_id").eq("id", saleId).single();
-  if (!sale) return { error: "Vente introuvable." };
+  if (!sale) return { error: "Cette vente est introuvable : elle a peut-être été supprimée." };
   if (!STATUS_TRANSITIONS[sale.status]?.includes(toStatus)) {
     return { error: `Transition ${sale.status} → ${toStatus} non autorisée.` };
   }

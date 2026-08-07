@@ -105,6 +105,64 @@ const RISK: Record<string, string> = {
   high: "Élevé",
 };
 
+const TYPES: Record<string, string> = {
+  // sites
+  siege: "Siège",
+  agence: "Agence",
+  magasin: "Magasin",
+  entrepot: "Entrepôt",
+  atelier: "Atelier",
+  etablissement: "Établissement",
+  autre: "Autre",
+  // entrepôts
+  depot: "Dépôt",
+  reserve: "Réserve",
+  emplacement: "Emplacement",
+  vehicule: "Véhicule",
+  temporaire: "Site temporaire",
+  // unités organisationnelles
+  direction: "Direction",
+  departement: "Département",
+  service: "Service",
+  unite: "Unité",
+  equipe: "Équipe",
+  // clients / articles
+  individual: "Particulier",
+  company: "Entreprise",
+  product: "Produit",
+  market: "Marché",
+};
+
+const AUDIT_ACTIONS: Record<string, string> = {
+  insert: "Création",
+  create: "Création",
+  update: "Modification",
+  delete: "Suppression",
+  restore: "Restauration",
+  login: "Connexion",
+  logout: "Déconnexion",
+  validate: "Validation",
+  approve: "Approbation",
+  reject: "Rejet",
+  import: "Import",
+  export: "Export",
+  download: "Téléchargement",
+  permission_change: "Changement de droits",
+  model_change: "Changement de modèle",
+};
+
+/** Libellé d'un type (site, entrepôt, unité, client, article). */
+export function typeLabel(value: string | null | undefined): string {
+  if (!value) return "—";
+  return TYPES[value] ?? humanizeToken(value);
+}
+
+/** Libellé d'une action du journal d'audit. */
+export function auditActionLabel(value: string | null | undefined): string {
+  if (!value) return "—";
+  return AUDIT_ACTIONS[value] ?? humanizeToken(value);
+}
+
 /** Libellé d'un statut ; renvoie la valeur brute mise en forme si inconnue. */
 export function statusLabel(value: string | null | undefined): string {
   if (!value) return "—";

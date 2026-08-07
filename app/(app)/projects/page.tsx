@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getActiveCompany } from "@/lib/active-company";
 import { DataTable, PageHeader, Badge } from "@/components/table";
+import { statusLabel } from "@/lib/labels";
 
 export default async function ProjectsPage() {
   const active = await getActiveCompany();
@@ -32,7 +33,7 @@ export default async function ProjectsPage() {
           { key: "title", label: "Intitulé" },
           { key: "client", label: "Client", render: (r) => r.client?.name ?? "—" },
           { key: "budget", label: "Budget", render: (r) => (r.budget ? Number(r.budget).toLocaleString("fr-FR") : "—") },
-          { key: "status", label: "Statut", render: (r) => <Badge tone={r.status === "active" ? "green" : "default"}>{r.status}</Badge> },
+          { key: "status", label: "Statut", render: (r) => <Badge tone={r.status === "active" ? "green" : "default"}>{statusLabel(r.status)}</Badge> },
         ]}
       />
     </div>

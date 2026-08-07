@@ -3,6 +3,7 @@
 import { useTransition } from "react";
 import { updateMemberRole, deactivateMember, reactivateMember } from "@/lib/actions/admin";
 import { Badge } from "@/components/table";
+import { statusLabel } from "@/lib/labels";
 
 type MemberProps = {
   membershipId: string;
@@ -20,7 +21,7 @@ export function MemberCard({ membershipId, fullName, roleId, roles, status }: Me
     <li className="card p-4">
       <div className="flex items-start justify-between gap-3">
         <span className="min-w-0 text-base font-bold text-slate-900">{fullName}</span>
-        <Badge tone={status === "active" ? "green" : "red"}>{status}</Badge>
+        <Badge tone={status === "active" ? "green" : "red"}>{statusLabel(status)}</Badge>
       </div>
 
       <label className="mt-3 block">
@@ -81,7 +82,7 @@ export function MemberRow({ membershipId, fullName, roleId, roles, status }: Mem
         </select>
       </td>
       <td className="px-4 py-3 text-sm text-slate-700">
-        <Badge tone={status === "active" ? "green" : "red"}>{status}</Badge>
+        <Badge tone={status === "active" ? "green" : "red"}>{statusLabel(status)}</Badge>
       </td>
       <td className="px-4 py-3 text-right">
         {status === "active" ? (

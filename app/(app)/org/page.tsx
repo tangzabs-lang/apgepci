@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getActiveCompany } from "@/lib/active-company";
 import { DataTable, PageHeader, SectionTitle } from "@/components/table";
+import { typeLabel } from "@/lib/labels";
 
 export default async function OrgPage() {
   const active = await getActiveCompany();
@@ -50,7 +51,7 @@ export default async function OrgPage() {
         editHref={(row) => `/org/sites/${row.id}`}
         columns={[
           { key: "name", label: "Nom" },
-          { key: "type", label: "Type" },
+          { key: "type", label: "Type", render: (r) => typeLabel(r.type) },
           { key: "city", label: "Ville" },
           {
             key: "is_active",
@@ -68,7 +69,7 @@ export default async function OrgPage() {
         editHref={(row) => `/org/units/${row.id}`}
         columns={[
           { key: "name", label: "Nom" },
-          { key: "type", label: "Type" },
+          { key: "type", label: "Type", render: (r) => typeLabel(r.type) },
           { key: "site", label: "Site", render: (r) => r.site?.name ?? "—" },
           { key: "status", label: "Statut" },
         ]}

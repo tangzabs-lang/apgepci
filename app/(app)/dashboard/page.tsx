@@ -17,6 +17,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getActiveCompany } from "@/lib/active-company";
 import { SalesExpensesChart, SalesTrendChart } from "@/components/sales-trend-chart";
 import { Badge } from "@/components/table";
+import { statusLabel } from "@/lib/labels";
 
 const nf = new Intl.NumberFormat("fr-FR");
 
@@ -315,7 +316,7 @@ export default async function DashboardPage() {
                       </span>
                     </span>
                     <span className="flex shrink-0 items-center gap-3">
-                      <Badge tone={statusTone[sale.status] ?? "default"}>{sale.status}</Badge>
+                      <Badge tone={statusTone[sale.status] ?? "default"}>{statusLabel(sale.status)}</Badge>
                       <span className="text-sm font-bold text-slate-900">
                         {nf.format(Number(sale.total ?? 0))}
                       </span>

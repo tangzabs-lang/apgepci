@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getActiveCompany } from "@/lib/active-company";
 import { DataTable, PageHeader, Badge } from "@/components/table";
 import { DecisionButtons } from "./decision-buttons";
+import { statusLabel } from "@/lib/labels";
 
 const STATUS_TONE: Record<string, "default" | "green" | "red" | "yellow"> = {
   draft: "default",
@@ -68,7 +69,7 @@ export default async function ExpensesPage() {
           {
             key: "status",
             label: "Statut",
-            render: (e) => <Badge tone={STATUS_TONE[e.status] ?? "default"}>{e.status}</Badge>,
+            render: (e) => <Badge tone={STATUS_TONE[e.status] ?? "default"}>{statusLabel(e.status)}</Badge>,
           },
           {
             key: "actions",

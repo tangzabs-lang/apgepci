@@ -4,6 +4,7 @@ import { getActiveCompany } from "@/lib/active-company";
 import { PageHeader, Badge, DataTable } from "@/components/table";
 import { SalesForm } from "../sales-form";
 import { StatusActions } from "./status-actions";
+import { statusLabel } from "@/lib/labels";
 
 export default async function SaleDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -72,7 +73,7 @@ export default async function SaleDetailPage({ params }: { params: Promise<{ id:
     <div>
       <PageHeader
         title={`Vente ${sale.reference}`}
-        action={<Badge tone="green">{sale.status}</Badge>}
+        action={<Badge tone="green">{statusLabel(sale.status)}</Badge>}
       />
       <StatusActions saleId={sale.id} status={sale.status} />
 

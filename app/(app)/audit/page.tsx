@@ -1,6 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { getActiveCompany } from "@/lib/active-company";
 import { DataTable, PageHeader, Badge } from "@/components/table";
+import { auditActionLabel, riskLabel } from "@/lib/labels";
+import { MODULE_LABELS } from "@/lib/modules";
 
 export default async function AuditPage({
   searchParams,
@@ -39,15 +41,15 @@ export default async function AuditPage({
         rows={logs ?? []}
         columns={[
           { key: "created_at", label: "Date", render: (r) => new Date(r.created_at).toLocaleString("fr-FR") },
-          { key: "action", label: "Action" },
-          { key: "module", label: "Module" },
+          { key: "action", label: "Action", render: (r) => auditActionLabel(r.action) },
+          { key: "module", label: "Module", render: (r) => MODULE_LABELS[r.module] ?? r.module },
           { key: "entity_table", label: "Table" },
           {
             key: "risk_level",
             label: "Risque",
             render: (r) => (
               <Badge tone={r.risk_level === "high" ? "red" : r.risk_level === "low" ? "default" : "yellow"}>
-                {r.risk_level}
+                {riskLabel(r.risk_level)}
               </Badge>
             ),
           },

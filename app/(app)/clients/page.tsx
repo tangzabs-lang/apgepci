@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getActiveCompany } from "@/lib/active-company";
 import { DataTable, PageHeader, Badge } from "@/components/table";
 import { ExportCsvButton } from "@/components/export-csv-button";
+import { statusLabel } from "@/lib/labels";
 
 export default async function ClientsPage({
   searchParams,
@@ -75,7 +76,7 @@ export default async function ClientsPage({
           {
             key: "status",
             label: "Statut",
-            render: (r) => <Badge tone={r.status === "active" ? "green" : "default"}>{r.status}</Badge>,
+            render: (r) => <Badge tone={r.status === "active" ? "green" : "default"}>{statusLabel(r.status)}</Badge>,
           },
         ]}
       />

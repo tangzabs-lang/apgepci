@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { getActiveCompany } from "@/lib/active-company";
 import { DataTable, PageHeader, Badge } from "@/components/table";
+import { statusLabel } from "@/lib/labels";
 
 const STATUS_TONE: Record<string, "default" | "green" | "red" | "yellow"> = {
   draft: "default",
@@ -36,7 +37,7 @@ export default async function PurchaseOrdersPage() {
           {
             key: "status",
             label: "Statut",
-            render: (r) => <Badge tone={STATUS_TONE[r.status] ?? "default"}>{r.status}</Badge>,
+            render: (r) => <Badge tone={STATUS_TONE[r.status] ?? "default"}>{statusLabel(r.status)}</Badge>,
           },
         ]}
       />

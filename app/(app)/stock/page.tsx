@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getActiveCompany } from "@/lib/active-company";
 import { DataTable, PageHeader, Badge, SectionTitle } from "@/components/table";
+import { statusLabel, typeLabel } from "@/lib/labels";
 
 export default async function StockPage() {
   const active = await getActiveCompany();
@@ -52,11 +53,11 @@ export default async function StockPage() {
         rows={warehouses ?? []}
         columns={[
           { key: "name", label: "Nom" },
-          { key: "type", label: "Type" },
+          { key: "type", label: "Type", render: (r) => typeLabel(r.type) },
           {
             key: "status",
             label: "Statut",
-            render: (r) => <Badge tone={r.status === "active" ? "green" : "default"}>{r.status}</Badge>,
+            render: (r) => <Badge tone={r.status === "active" ? "green" : "default"}>{statusLabel(r.status)}</Badge>,
           },
         ]}
       />

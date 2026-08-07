@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getActiveCompany } from "@/lib/active-company";
 import { DataTable, PageHeader, Badge, SectionTitle } from "@/components/table";
+import { statusLabel, stageLabel, priorityLabel } from "@/lib/labels";
 
 export default async function CrmPage() {
   const active = await getActiveCompany();
@@ -47,7 +48,7 @@ export default async function CrmPage() {
           { key: "name", label: "Nom" },
           { key: "origin", label: "Origine" },
           { key: "potential", label: "Potentiel" },
-          { key: "status", label: "Statut", render: (r) => <Badge>{r.status}</Badge> },
+          { key: "status", label: "Statut", render: (r) => <Badge>{statusLabel(r.status)}</Badge> },
         ]}
       />
 
@@ -58,7 +59,7 @@ export default async function CrmPage() {
           { key: "need", label: "Besoin" },
           { key: "estimated_value", label: "Valeur estimée", render: (r) => (r.estimated_value ? Number(r.estimated_value).toLocaleString("fr-FR") : "—") },
           { key: "probability", label: "Probabilité (%)" },
-          { key: "stage", label: "Étape", render: (r) => <Badge>{r.stage}</Badge> },
+          { key: "stage", label: "Étape", render: (r) => <Badge tone="blue">{stageLabel(r.stage)}</Badge> },
         ]}
       />
 
@@ -68,11 +69,11 @@ export default async function CrmPage() {
         columns={[
           { key: "subject", label: "Objet" },
           { key: "client", label: "Client", render: (r) => r.client?.name ?? "—" },
-          { key: "priority", label: "Priorité" },
+          { key: "priority", label: "Priorité", render: (r) => priorityLabel(r.priority) },
           {
             key: "status",
             label: "Statut",
-            render: (r) => <Badge tone={r.status === "closed" ? "green" : "yellow"}>{r.status}</Badge>,
+            render: (r) => <Badge tone={r.status === "closed" ? "green" : "yellow"}>{statusLabel(r.status)}</Badge>,
           },
         ]}
       />

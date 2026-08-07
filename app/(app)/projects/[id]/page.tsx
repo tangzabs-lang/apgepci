@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { PageHeader, Badge, SectionTitle, StatTile } from "@/components/table";
 import { TaskList } from "./task-list";
+import { statusLabel } from "@/lib/labels";
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -23,7 +24,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
   return (
     <div>
-      <PageHeader title={project.title} action={<Badge tone="green">{project.status}</Badge>} />
+      <PageHeader title={project.title} action={<Badge tone="green">{statusLabel(project.status)}</Badge>} />
       <p className="text-sm text-slate-500">Client : {project.client?.name ?? "—"}</p>
 
       <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">

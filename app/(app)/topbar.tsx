@@ -1,11 +1,11 @@
 "use client";
 
-import { Building2, ChevronDown, LogOut } from "lucide-react";
-import { logout } from "@/lib/actions/auth";
+import { Building2, ChevronDown } from "lucide-react";
 import { setActiveCompany } from "@/lib/actions/session";
 import { FullscreenToggle } from "@/components/fullscreen-toggle";
 import { LogoLink } from "@/components/logo";
 import { MobileNav } from "./sidebar";
+import { UserMenu } from "./user-menu";
 
 type CompanyMembership = {
   company_id: string;
@@ -23,8 +23,6 @@ export function Topbar({
   userEmail: string;
   permissions: string[];
 }) {
-  const initials = userEmail.slice(0, 2).toUpperCase();
-
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/85 backdrop-blur-md">
       <div className="flex h-14 items-center justify-between gap-2 px-3 sm:h-16 sm:gap-3 sm:px-6">
@@ -55,23 +53,8 @@ export function Topbar({
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <div className="hidden items-center gap-2.5 rounded-xl border border-slate-200 bg-white py-1.5 pl-1.5 pr-3 sm:flex">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-blue-600 to-blue-400 text-xs font-bold text-white">
-              {initials}
-            </span>
-            <span className="max-w-[16rem] truncate text-sm font-medium text-slate-600">
-              {userEmail}
-            </span>
-          </div>
-
           <FullscreenToggle />
-
-          <form action={logout}>
-            <button type="submit" className="btn btn-outline" title="Déconnexion">
-              <LogOut className="h-4 w-4" />
-              <span className="hidden sm:inline">Déconnexion</span>
-            </button>
-          </form>
+          <UserMenu userEmail={userEmail} />
         </div>
       </div>
     </header>

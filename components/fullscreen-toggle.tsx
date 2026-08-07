@@ -1,23 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { Maximize, Minimize } from "lucide-react";
 
+function subscribeToFullscreen(onChange: () => void) {
+  document.addEventListener("fullscreenchange", onChange);
+  return () => document.removeEventListener("fullscreenchange", onChange);
+}
+
+const noopSubscribe = () => () => {};
+
 /**
- * Bascule plein écran. Masqué si l'API n'est pas disponible (Safari iOS, par
- * exemple, n'autorise pas le plein écran sur le document).
+ * Bascule plein écran. Le bouton disparaît si l'API n'est pas disponible
+ * (Safari iOS, par exemple, n'autorise pas le plein écran sur le document).
  */
 export function FullscreenToggle({ className = "" }: { className?: string }) {
-  const [supported, setSupported] = useState(false);
-  const [active, setActive] = useState(false);
-
-  useEffect(() => {
-    setSupported(document.fullscreenEnabled);
-
-    const onChange = () => setActive(Boolean(document.fullscreenElement));
-    document.addEventListener("fullscreenchange", onChange);
-    return () => document.removeEventListener("fullscreenchange", onChange);
-  }, []);
+  const active = useSyncExternalStore(
+    subscribeToFullscreen,
+    () => Boolean(document.fullscreenElement),
+    () => false
+  );
+  const supported = useSyncExternalStore(
+    noopSubscribe,
+    () => document.fullscreenEnabled,
+    () => false
+  );
 
   if (!supported) return null;
 
@@ -29,8 +36,8 @@ export function FullscreenToggle({ className = "" }: { className?: string }) {
         await document.documentElement.requestFullscreen();
       }
     } catch {
-      // Refus du navigateur (geste utilisateur manquant, politique de sécurité) :
-      // rien à signaler, l'affichage reste inchangé.
+      // Refus du navigateur (politique de sécurité, geste utilisateur manquant) :
+      // l'affichage reste simplement inchangé.
     }
   }
 

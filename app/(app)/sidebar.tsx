@@ -172,7 +172,7 @@ function NavList({
 function Brand({ collapsed }: { collapsed?: boolean }) {
   return (
     <Link href="/dashboard" aria-label="APGEPCI — tableau de bord" className="inline-flex min-w-0">
-      <Logo variant={collapsed ? "mark" : "lockup"} height={36} priority />
+      <Logo variant={collapsed ? "mark" : "lockup"} height={collapsed ? 36 : 30} priority />
     </Link>
   );
 }

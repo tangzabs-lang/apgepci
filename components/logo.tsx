@@ -1,12 +1,22 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const LOCKUP_SRC = "/images/apgepci-logo.png";
-const MARK_SRC = "/images/apgepci-mark.png";
+const SRC = "/images/apgepci.png";
+const NATURAL = { width: 1536, height: 1024 };
+
+/**
+ * Zones utiles du visuel fourni, en pixels source. Le fichier n'est jamais
+ * modifié : le cadrage est purement CSS, sinon le logo occuperait moins d'un
+ * tiers de l'image et resterait illisible aux tailles d'interface.
+ */
+const CROPS = {
+  lockup: { x: 250, y: 340, width: 1040, height: 300 },
+  mark: { x: 265, y: 345, width: 260, height: 260 },
+};
 
 /**
  * Logo APGEPCI. Le visuel fourni est un rendu sur fond sombre : il est donc
- * toujours présenté sur une plaque bleu nuit, quel que soit le fond de la page.
+ * toujours présenté sur une plaque foncée, quel que soit le fond de la page.
  */
 export function Logo({
   variant = "lockup",
@@ -19,36 +29,28 @@ export function Logo({
   height?: number;
   priority?: boolean;
 }) {
-  if (variant === "mark") {
-    return (
-      <span
-        className={`inline-flex shrink-0 overflow-hidden rounded-xl ring-1 ring-inset ring-white/10 ${className}`}
-        style={{ width: height, height }}
-      >
-        <Image
-          src={MARK_SRC}
-          alt="APGEPCI"
-          width={256}
-          height={256}
-          priority={priority}
-          className="h-full w-full object-cover"
-        />
-      </span>
-    );
-  }
+  const crop = CROPS[variant];
+  const width = (height * crop.width) / crop.height;
+  const scale = height / crop.height; // pixels affichés par pixel source
 
   return (
     <span
-      className={`inline-flex shrink-0 overflow-hidden rounded-xl ring-1 ring-inset ring-white/10 ${className}`}
-      style={{ height }}
+      className={`relative inline-block shrink-0 overflow-hidden rounded-xl bg-[#3d3d3d] ring-1 ring-inset ring-white/10 ${className}`}
+      style={{ width, height }}
     >
       <Image
-        src={LOCKUP_SRC}
+        src={SRC}
         alt="APGEPCI"
-        width={744}
-        height={240}
+        width={NATURAL.width}
+        height={NATURAL.height}
         priority={priority}
-        className="h-full w-auto object-cover"
+        className="absolute max-w-none"
+        style={{
+          width: NATURAL.width * scale,
+          height: NATURAL.height * scale,
+          left: -crop.x * scale,
+          top: -crop.y * scale,
+        }}
       />
     </span>
   );

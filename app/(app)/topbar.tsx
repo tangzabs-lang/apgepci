@@ -3,6 +3,7 @@
 import { Building2, ChevronDown, LogOut } from "lucide-react";
 import { logout } from "@/lib/actions/auth";
 import { setActiveCompany } from "@/lib/actions/session";
+import { FullscreenToggle } from "@/components/fullscreen-toggle";
 import { LogoLink } from "@/components/logo";
 import { MobileNav } from "./sidebar";
 
@@ -62,6 +63,8 @@ export function Topbar({
               {userEmail}
             </span>
           </div>
+
+          <FullscreenToggle />
 
           <form action={logout}>
             <button type="submit" className="btn btn-outline" title="Déconnexion">

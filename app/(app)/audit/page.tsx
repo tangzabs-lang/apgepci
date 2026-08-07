@@ -42,7 +42,7 @@ export default async function AuditPage({
         columns={[
           { key: "created_at", label: "Date", render: (r) => new Date(r.created_at).toLocaleString("fr-FR") },
           { key: "action", label: "Action", render: (r) => auditActionLabel(r.action) },
-          { key: "module", label: "Module", render: (r) => MODULE_LABELS[r.module] ?? r.module },
+          { key: "module", label: "Module", render: (r) => (r.module ? MODULE_LABELS[r.module] ?? r.module : "—") },
           { key: "entity_table", label: "Table" },
           {
             key: "risk_level",

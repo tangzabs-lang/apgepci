@@ -46,7 +46,7 @@ export default async function DiagnosticPage({
   return (
     <OnboardingShell step={2}>
       <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14">
-        <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-linear-to-br from-blue-600 to-blue-400 text-white shadow-[0_12px_24px_-12px_rgba(37,99,235,0.9)]">
+        <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-linear-to-br from-blue-600 to-blue-400 text-white shadow-[0_12px_24px_-12px_rgba(37,99,235,0.9)]">
           <ClipboardList className="h-5 w-5" />
         </span>
         <h1 className="mt-4 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
@@ -168,7 +168,7 @@ export default async function DiagnosticPage({
                 {diagnostic.recommended_modules.map((m) => (
                   <li
                     key={m}
-                    className="flex items-center gap-1.5 rounded-full bg-linear-to-r from-blue-600 to-blue-500 px-3 py-1.5 text-xs font-semibold text-white"
+                    className="flex items-center gap-1.5 rounded-sm bg-linear-to-r from-blue-600 to-blue-500 px-3 py-1.5 text-xs font-semibold text-white"
                   >
                     <Check className="h-3 w-3 shrink-0" />
                     {MODULE_LABELS[m] ?? m}
@@ -219,9 +219,9 @@ function Toggle({
   defaultChecked?: boolean;
 }) {
   return (
-    <label className="flex min-w-0 cursor-pointer items-start gap-3 rounded-xl border border-slate-200 p-3.5 transition-colors hover:border-slate-300 has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50 has-[:checked]:shadow-[0_0_0_4px_rgba(37,99,235,0.1)]">
+    <label className="flex min-w-0 cursor-pointer items-start gap-3 rounded-md border border-slate-200 p-3.5 transition-colors hover:border-slate-300 has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50 has-[:checked]:shadow-[0_0_0_4px_rgba(37,99,235,0.1)]">
       <input type="checkbox" name={name} defaultChecked={defaultChecked} className="peer sr-only" />
-      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-slate-300 text-transparent peer-checked:border-blue-600 peer-checked:bg-blue-600 peer-checked:text-white">
+      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-sm border border-slate-300 text-transparent peer-checked:border-blue-600 peer-checked:bg-blue-600 peer-checked:text-white">
         <Check className="h-3.5 w-3.5" />
       </span>
       <span className="min-w-0 text-sm text-slate-700">{label}</span>

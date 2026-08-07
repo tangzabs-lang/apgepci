@@ -32,7 +32,7 @@ export function Topbar({
           <LogoLink href="/dashboard" variant="mark" height={36} className="lg:hidden" />
 
           <form action={setActiveCompany} className="min-w-0">
-            <label className="relative flex min-w-0 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-colors focus-within:border-blue-500 focus-within:shadow-[0_0_0_4px_rgba(37,99,235,0.12)] hover:border-blue-200">
+            <label className="relative flex min-w-0 items-center gap-2 rounded-sm border border-slate-200 bg-white px-3 py-2 text-sm shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-colors focus-within:border-blue-500 focus-within:shadow-[0_0_0_4px_rgba(37,99,235,0.12)] hover:border-blue-200">
               <Building2 className="h-4 w-4 shrink-0 text-blue-600" />
               <select
                 name="company_id"

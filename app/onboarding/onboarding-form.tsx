@@ -147,11 +147,11 @@ export function OnboardingForm({
               <p className="mt-0.5 text-xs text-slate-400">
                 Facultatif — sélectionnez toutes les activités additionnelles concernées.
               </p>
-              <div className="mt-1.5 grid max-h-48 grid-cols-1 gap-1 overflow-y-auto rounded-xl border border-slate-200 bg-slate-50/60 p-2 sm:grid-cols-2">
+              <div className="mt-1.5 grid max-h-48 grid-cols-1 gap-1 overflow-y-auto rounded-md border border-slate-200 bg-slate-50/60 p-2 sm:grid-cols-2">
                 {sectors.map((s) => (
                   <label
                     key={s.id}
-                    className="flex min-w-0 items-center gap-2 rounded-md px-2 py-1.5 text-sm text-slate-600 hover:bg-slate-50"
+                    className="flex min-w-0 items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-slate-600 hover:bg-slate-50"
                   >
                     <input
                       type="checkbox"
@@ -168,7 +168,7 @@ export function OnboardingForm({
         </Section>
 
         {state?.error && (
-          <div className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-700">
+          <div className="flex items-start gap-2 rounded-sm border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-700">
             <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
             <span className="min-w-0">{state.error}</span>
           </div>

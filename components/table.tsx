@@ -15,7 +15,7 @@ export function DataTable<T extends { id: string }>({
   if (rows.length === 0) {
     return (
       <div className="card flex flex-col items-center justify-center gap-3 border-dashed px-6 py-14 text-center">
-        <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+        <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
           <Inbox className="h-6 w-6" />
         </span>
         <p className="max-w-sm text-sm text-slate-500">{emptyMessage}</p>
@@ -39,7 +39,7 @@ export function DataTable<T extends { id: string }>({
                   {cell(first, row)}
                 </span>
                 {editHref && (
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-blue-50 text-blue-600">
                     <Pencil className="h-4 w-4" />
                   </span>
                 )}
@@ -101,7 +101,7 @@ export function DataTable<T extends { id: string }>({
                   <td className="px-4 py-3 text-right">
                     <Link
                       href={editHref(row)}
-                      className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-sm font-semibold text-blue-600 transition-colors hover:bg-blue-100/70 hover:text-blue-700"
+                      className="inline-flex items-center gap-1.5 rounded-sm px-2.5 py-1.5 text-sm font-semibold text-blue-600 transition-colors hover:bg-blue-100/70 hover:text-blue-700"
                     >
                       <Pencil className="h-3.5 w-3.5" />
                       Modifier

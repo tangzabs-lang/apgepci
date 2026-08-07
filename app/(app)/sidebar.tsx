@@ -94,7 +94,7 @@ function NavLink({
       onClick={onNavigate}
       aria-current={isActive ? "page" : undefined}
       title={collapsed ? item.label : undefined}
-      className={`group relative flex items-center gap-3 rounded-xl py-2.5 text-sm font-medium transition-all ${
+      className={`group relative flex items-center gap-3 rounded-md py-2.5 text-sm font-medium transition-all ${
         collapsed ? "justify-center px-0" : "px-3"
       } ${
         isActive
@@ -103,7 +103,7 @@ function NavLink({
       }`}
     >
       <span
-        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors ${
+        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-sm transition-colors ${
           isActive
             ? "bg-white/20 text-white"
             : "bg-slate-100 text-slate-500 group-hover:bg-white group-hover:text-blue-600"
@@ -204,7 +204,7 @@ export function Sidebar({
           aria-expanded={!collapsed}
           aria-label={collapsed ? "Déplier le menu" : "Replier le menu"}
           title={collapsed ? "Déplier le menu" : "Replier le menu"}
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-blue-600"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm text-slate-400 transition-colors hover:bg-slate-100 hover:text-blue-600"
         >
           {collapsed ? (
             <PanelLeftOpen className="h-5 w-5" />
@@ -257,7 +257,7 @@ function Drawer({
             type="button"
             onClick={onClose}
             aria-label="Fermer le menu"
-            className="flex h-11 w-11 items-center justify-center rounded-xl text-slate-500 hover:bg-slate-100"
+            className="flex h-11 w-11 items-center justify-center rounded-md text-slate-500 hover:bg-slate-100"
           >
             <X className="h-5 w-5" />
           </button>
@@ -279,7 +279,7 @@ export function MobileNav({ permissions }: { permissions: string[] }) {
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Ouvrir le menu"
-        className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition-colors hover:border-blue-200 hover:text-blue-600 lg:hidden"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-600 transition-colors hover:border-blue-200 hover:text-blue-600 lg:hidden"
       >
         <Menu className="h-5 w-5" />
       </button>

@@ -105,7 +105,7 @@ export function SalesForm({
         {/* Une carte par ligne : saisissable au pouce, sans défilement horizontal. */}
         <ul className="mt-2 flex flex-col gap-3">
           {lines.map((line, i) => (
-            <li key={i} className="rounded-2xl border border-slate-200 bg-slate-50/60 p-3 sm:p-4">
+            <li key={i} className="rounded-lg border border-slate-200 bg-slate-50/60 p-3 sm:p-4">
               <div className="flex items-center justify-between gap-3">
                 <span className="text-xs font-bold uppercase tracking-wide text-slate-400">
                   Ligne {i + 1}
@@ -114,7 +114,7 @@ export function SalesForm({
                   type="button"
                   onClick={() => setLines((prev) => prev.filter((_, idx) => idx !== i))}
                   aria-label={`Retirer la ligne ${i + 1}`}
-                  className="flex h-9 w-9 items-center justify-center rounded-xl text-red-600 transition-colors hover:bg-red-50"
+                  className="flex h-9 w-9 items-center justify-center rounded-md text-red-600 transition-colors hover:bg-red-50"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -200,7 +200,7 @@ export function SalesForm({
       </div>
 
       <div className="flex justify-end">
-        <dl className="w-full space-y-1.5 rounded-2xl bg-blue-50/60 p-4 text-sm sm:w-64">
+        <dl className="w-full space-y-1.5 rounded-lg bg-blue-50/60 p-4 text-sm sm:w-64">
           <div className="flex justify-between">
             <dt className="text-slate-500">Sous-total</dt>
             <dd>{totals.subtotal.toLocaleString("fr-FR")}</dd>

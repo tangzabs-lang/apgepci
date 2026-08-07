@@ -53,7 +53,7 @@ export default function SignupPage() {
         />
 
         {state?.error && (
-          <div className="flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-sm font-medium text-red-700">
+          <div className="flex items-start gap-2 rounded-md border border-red-200 bg-red-50 px-3 py-2.5 text-sm font-medium text-red-700">
             <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
             <span className="min-w-0">{state.error}</span>
           </div>

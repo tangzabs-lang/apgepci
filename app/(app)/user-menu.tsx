@@ -48,7 +48,7 @@ export function UserMenu({ userEmail }: { userEmail: string }) {
       {open && (
         <div
           role="menu"
-          className="absolute right-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_20px_45px_-20px_rgba(15,23,42,0.35)]"
+          className="absolute right-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-md border border-slate-200 bg-white shadow-[0_20px_45px_-20px_rgba(15,23,42,0.35)]"
         >
           <div className="border-b border-slate-100 px-4 py-3">
             <p className="text-[0.68rem] font-bold uppercase tracking-[0.14em] text-slate-400">

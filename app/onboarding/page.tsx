@@ -15,7 +15,7 @@ export default async function OnboardingPage() {
   return (
     <OnboardingShell step={1}>
       <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14">
-        <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-linear-to-br from-blue-600 to-blue-400 text-white shadow-[0_12px_24px_-12px_rgba(37,99,235,0.9)]">
+        <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-linear-to-br from-blue-600 to-blue-400 text-white shadow-[0_12px_24px_-12px_rgba(37,99,235,0.9)]">
           <Building2 className="h-5 w-5" />
         </span>
         <h1 className="mt-4 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">

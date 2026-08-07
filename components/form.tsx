@@ -121,7 +121,7 @@ export function CheckboxField({
   defaultChecked?: boolean;
 }) {
   return (
-    <label className="flex cursor-pointer items-center gap-2.5 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:border-blue-200 hover:bg-blue-50/50">
+    <label className="flex cursor-pointer items-center gap-2.5 rounded-md border border-slate-200 bg-white px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:border-blue-200 hover:bg-blue-50/50">
       <input
         type="checkbox"
         name={name}
@@ -146,7 +146,7 @@ export function SubmitButton({ children }: { children: React.ReactNode }) {
 export function FormError({ message }: { message?: string }) {
   if (!message) return null;
   return (
-    <p className="flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-sm font-medium text-red-700">
+    <p className="flex items-start gap-2 rounded-md border border-red-200 bg-red-50 px-3 py-2.5 text-sm font-medium text-red-700">
       <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
       {message}
     </p>

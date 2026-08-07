@@ -50,7 +50,7 @@ export function FullscreenToggle({ className = "" }: { className?: string }) {
       aria-label={label}
       aria-pressed={active}
       title={label}
-      className={`inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 transition-colors hover:border-blue-200 hover:bg-blue-50 hover:text-blue-600 sm:h-10 sm:w-10 ${className}`}
+      className={`inline-flex h-11 w-11 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-500 transition-colors hover:border-blue-200 hover:bg-blue-50 hover:text-blue-600 sm:h-10 sm:w-10 ${className}`}
     >
       {active ? <Minimize className="h-5 w-5" /> : <Maximize className="h-5 w-5" />}
     </button>

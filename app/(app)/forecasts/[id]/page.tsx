@@ -62,7 +62,7 @@ export default async function ForecastDetailPage({ params }: { params: Promise<{
 
         <ul className="mt-4 space-y-3">
           {(comments ?? []).map((c) => (
-            <li key={c.id} className="rounded-md border border-slate-200 p-3 text-sm">
+            <li key={c.id} className="rounded-sm border border-slate-200 p-3 text-sm">
               <p>{c.comment}</p>
               {c.cause && <p className="text-slate-500">Cause : {c.cause}</p>}
               {c.corrective_action && (

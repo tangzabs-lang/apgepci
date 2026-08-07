@@ -13,7 +13,7 @@ export function TaskList({ projectId, tasks }: { projectId: string; tasks: Task[
     <div>
       <ul className="space-y-2">
         {tasks.map((t) => (
-          <li key={t.id} className="flex items-center gap-3 rounded-md border border-slate-200 p-3">
+          <li key={t.id} className="flex items-center gap-3 rounded-sm border border-slate-200 p-3">
             <span className="flex-1 text-sm">{t.title}</span>
             <span className="text-xs text-slate-500">{t.due_date ?? ""}</span>
             <input

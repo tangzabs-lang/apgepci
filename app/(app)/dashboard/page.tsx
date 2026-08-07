@@ -176,7 +176,7 @@ export default async function DashboardPage() {
   return (
     <div className="flex flex-col gap-6">
       {/* Bandeau d'accueil */}
-      <section className="panel-gradient relative overflow-hidden rounded-2xl px-4 py-6 text-white shadow-[0_24px_60px_-30px_rgba(30,64,175,0.9)] sm:rounded-3xl sm:px-8 sm:py-10">
+      <section className="panel-gradient relative overflow-hidden rounded-lg px-4 py-6 text-white shadow-[0_24px_60px_-30px_rgba(30,64,175,0.9)] sm:rounded-lg sm:px-8 sm:py-10">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0"
@@ -187,7 +187,7 @@ export default async function DashboardPage() {
         />
         <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="min-w-0">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold capitalize text-blue-50 ring-1 ring-inset ring-white/20">
+            <span className="inline-flex items-center gap-1.5 rounded-sm bg-white/15 px-3 py-1 text-xs font-semibold capitalize text-blue-50 ring-1 ring-inset ring-white/20">
               {today}
             </span>
             <h1 className="mt-3 text-2xl font-bold tracking-tight sm:mt-4 sm:text-4xl">
@@ -203,14 +203,14 @@ export default async function DashboardPage() {
           </div>
 
           <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap">
-            <div className="rounded-2xl bg-white/12 px-3 py-3 ring-1 ring-inset ring-white/20 backdrop-blur sm:px-4">
+            <div className="rounded-lg bg-white/12 px-3 py-3 ring-1 ring-inset ring-white/20 backdrop-blur sm:px-4">
               <p className="text-xs font-medium text-blue-50/80">Alertes ouvertes</p>
               <p className="mt-1 flex items-center gap-2 text-xl font-bold sm:text-2xl">
                 <AlertTriangle className="h-5 w-5 text-amber-200" />
                 {nf.format(alertsCount ?? 0)}
               </p>
             </div>
-            <div className="rounded-2xl bg-white/12 px-3 py-3 ring-1 ring-inset ring-white/20 backdrop-blur sm:px-4">
+            <div className="rounded-lg bg-white/12 px-3 py-3 ring-1 ring-inset ring-white/20 backdrop-blur sm:px-4">
               <p className="text-xs font-medium text-blue-50/80">Validations en attente</p>
               <p className="mt-1 flex items-center gap-2 text-xl font-bold sm:text-2xl">
                 <CheckCircle2 className="h-5 w-5 text-blue-100" />
@@ -229,7 +229,7 @@ export default async function DashboardPage() {
           return (
             <Link key={s.label} href={s.href} className="stat-card card-hover group p-4 sm:p-5">
               <div className="flex items-start justify-between">
-                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-50 text-blue-600 transition-colors group-hover:bg-blue-600 group-hover:text-white sm:h-11 sm:w-11">
+                <span className="flex h-9 w-9 items-center justify-center rounded-md bg-blue-50 text-blue-600 transition-colors group-hover:bg-blue-600 group-hover:text-white sm:h-11 sm:w-11">
                   <s.icon className="h-5 w-5" />
                 </span>
                 <ArrowUpRight className="h-4 w-4 text-slate-300 transition-colors group-hover:text-blue-600" />
@@ -335,9 +335,9 @@ export default async function DashboardPage() {
               <Link
                 key={a.href}
                 href={a.href}
-                className="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm font-semibold text-slate-700 transition-all hover:border-blue-200 hover:bg-blue-50/60 hover:text-blue-700"
+                className="group flex items-center gap-3 rounded-md border border-slate-200 bg-white px-3.5 py-3 text-sm font-semibold text-slate-700 transition-all hover:border-blue-200 hover:bg-blue-50/60 hover:text-blue-700"
               >
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50 text-blue-600 transition-colors group-hover:bg-blue-600 group-hover:text-white">
+                <span className="flex h-9 w-9 items-center justify-center rounded-sm bg-blue-50 text-blue-600 transition-colors group-hover:bg-blue-600 group-hover:text-white">
                   <a.icon className="h-4 w-4" />
                 </span>
                 {a.label}
